@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import "DocuSignClient.h"
 
 @interface ViewController ()
 
@@ -18,6 +19,18 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+
+    DocuSignClient * client = [DocuSignClient sharedInstance];
+    [client loginUser:@"aniketudeshmukh@gmail.com" password:@"Ani216ket" onCompletion:^(NSError *error) {
+        if (error) {
+            NSLog(@"Login Failed!");
+            NSLog(@"Error Code : %d",error.code);
+            NSLog(@"Reason : %@",error.localizedDescription);
+        }
+        else {
+            NSLog(@"Login Successful");
+        }
+    }];
 }
 
 - (void)didReceiveMemoryWarning

@@ -21,6 +21,8 @@
 		E252BD1A188F7F2500532B90 /* DocuSignTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E252BD19188F7F2500532B90 /* DocuSignTests.m */; };
 		E252BD2A188F7FFE00532B90 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E252BD26188F7FFE00532B90 /* AppDelegate.m */; };
 		E252BD2B188F7FFE00532B90 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E252BD29188F7FFE00532B90 /* ViewController.m */; };
+		E2FC83EB1890B55100EEE39E /* DocuSignClient.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FC83EA1890B55100EEE39E /* DocuSignClient.m */; };
+		E2FC83F11890C96D00EEE39E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FC83F01890C96D00EEE39E /* LoginViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,10 @@
 		E252BD26188F7FFE00532B90 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		E252BD28188F7FFE00532B90 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		E252BD29188F7FFE00532B90 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		E2FC83E91890B55100EEE39E /* DocuSignClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocuSignClient.h; sourceTree = "<group>"; };
+		E2FC83EA1890B55100EEE39E /* DocuSignClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocuSignClient.m; sourceTree = "<group>"; };
+		E2FC83EF1890C96D00EEE39E /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		E2FC83F01890C96D00EEE39E /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +118,8 @@
 		E252BCF4188F7F2400532B90 /* DocuSign */ = {
 			isa = PBXGroup;
 			children = (
+				E2FC83E71890B50700EEE39E /* Models */,
+				E2FC83E81890B50700EEE39E /* Operations */,
 				E252BD24188F7FFE00532B90 /* Application */,
 				E252BD27188F7FFE00532B90 /* ViewControllers */,
 				E252BD00188F7F2400532B90 /* Main.storyboard */,
@@ -164,8 +172,26 @@
 			children = (
 				E252BD28188F7FFE00532B90 /* ViewController.h */,
 				E252BD29188F7FFE00532B90 /* ViewController.m */,
+				E2FC83EF1890C96D00EEE39E /* LoginViewController.h */,
+				E2FC83F01890C96D00EEE39E /* LoginViewController.m */,
 			);
 			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		E2FC83E71890B50700EEE39E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E2FC83E81890B50700EEE39E /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				E2FC83E91890B55100EEE39E /* DocuSignClient.h */,
+				E2FC83EA1890B55100EEE39E /* DocuSignClient.m */,
+			);
+			path = Operations;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -267,7 +293,9 @@
 			files = (
 				E252BD2A188F7FFE00532B90 /* AppDelegate.m in Sources */,
 				E252BCFB188F7F2400532B90 /* main.m in Sources */,
+				E2FC83EB1890B55100EEE39E /* DocuSignClient.m in Sources */,
 				E252BD2B188F7FFE00532B90 /* ViewController.m in Sources */,
+				E2FC83F11890C96D00EEE39E /* LoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,6 +504,7 @@
 				E252BD1F188F7F2500532B90 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E252BD20188F7F2500532B90 /* Build configuration list for PBXNativeTarget "DocuSignTests" */ = {
 			isa = XCConfigurationList;
@@ -484,6 +513,7 @@
 				E252BD22188F7F2500532B90 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
