@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E236C2751890EEAD003E8F49 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = E236C2741890EEAD003E8F49 /* User.m */; };
+		E236C27818910D8D003E8F49 /* MenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E236C27718910D8D003E8F49 /* MenuViewController.m */; };
+		E236C27B1891111E003E8F49 /* DocumentsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E236C27A1891111E003E8F49 /* DocumentsListViewController.m */; };
+		E236C27E18912319003E8F49 /* FolderItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E236C27D18912319003E8F49 /* FolderItem.m */; };
+		E236C28118912F92003E8F49 /* WebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E236C28018912F92003E8F49 /* WebViewController.m */; };
+		E236C285189135F9003E8F49 /* FolderItemCustomCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E236C284189135F9003E8F49 /* FolderItemCustomCell.m */; };
+		E236C28818914972003E8F49 /* DocumentDetailsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E236C28718914972003E8F49 /* DocumentDetailsViewController.m */; };
 		E252BCEF188F7F2400532B90 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E252BCEE188F7F2400532B90 /* Foundation.framework */; };
 		E252BCF1188F7F2400532B90 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E252BCF0188F7F2400532B90 /* CoreGraphics.framework */; };
 		E252BCF3188F7F2400532B90 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E252BCF2188F7F2400532B90 /* UIKit.framework */; };
@@ -20,7 +27,6 @@
 		E252BD18188F7F2500532B90 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E252BD16188F7F2500532B90 /* InfoPlist.strings */; };
 		E252BD1A188F7F2500532B90 /* DocuSignTests.m in Sources */ = {isa = PBXBuildFile; fileRef = E252BD19188F7F2500532B90 /* DocuSignTests.m */; };
 		E252BD2A188F7FFE00532B90 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E252BD26188F7FFE00532B90 /* AppDelegate.m */; };
-		E252BD2B188F7FFE00532B90 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E252BD29188F7FFE00532B90 /* ViewController.m */; };
 		E2FC83EB1890B55100EEE39E /* DocuSignClient.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FC83EA1890B55100EEE39E /* DocuSignClient.m */; };
 		E2FC83F11890C96D00EEE39E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FC83F01890C96D00EEE39E /* LoginViewController.m */; };
 /* End PBXBuildFile section */
@@ -36,6 +42,20 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E236C2731890EEAD003E8F49 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		E236C2741890EEAD003E8F49 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		E236C27618910D8D003E8F49 /* MenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuViewController.h; sourceTree = "<group>"; };
+		E236C27718910D8D003E8F49 /* MenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuViewController.m; sourceTree = "<group>"; };
+		E236C2791891111E003E8F49 /* DocumentsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocumentsListViewController.h; sourceTree = "<group>"; };
+		E236C27A1891111E003E8F49 /* DocumentsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocumentsListViewController.m; sourceTree = "<group>"; };
+		E236C27C18912319003E8F49 /* FolderItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderItem.h; sourceTree = "<group>"; };
+		E236C27D18912319003E8F49 /* FolderItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FolderItem.m; sourceTree = "<group>"; };
+		E236C27F18912F92003E8F49 /* WebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebViewController.h; sourceTree = "<group>"; };
+		E236C28018912F92003E8F49 /* WebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewController.m; sourceTree = "<group>"; };
+		E236C283189135F9003E8F49 /* FolderItemCustomCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FolderItemCustomCell.h; sourceTree = "<group>"; };
+		E236C284189135F9003E8F49 /* FolderItemCustomCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FolderItemCustomCell.m; sourceTree = "<group>"; };
+		E236C28618914972003E8F49 /* DocumentDetailsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocumentDetailsViewController.h; sourceTree = "<group>"; };
+		E236C28718914972003E8F49 /* DocumentDetailsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocumentDetailsViewController.m; sourceTree = "<group>"; };
 		E252BCEB188F7F2400532B90 /* DocuSign.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DocuSign.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E252BCEE188F7F2400532B90 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		E252BCF0188F7F2400532B90 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -53,8 +73,6 @@
 		E252BD19188F7F2500532B90 /* DocuSignTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DocuSignTests.m; sourceTree = "<group>"; };
 		E252BD25188F7FFE00532B90 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E252BD26188F7FFE00532B90 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		E252BD28188F7FFE00532B90 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		E252BD29188F7FFE00532B90 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		E2FC83E91890B55100EEE39E /* DocuSignClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocuSignClient.h; sourceTree = "<group>"; };
 		E2FC83EA1890B55100EEE39E /* DocuSignClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocuSignClient.m; sourceTree = "<group>"; };
 		E2FC83EF1890C96D00EEE39E /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -85,6 +103,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E236C2721890EEA1003E8F49 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E236C2731890EEAD003E8F49 /* User.h */,
+				E236C2741890EEAD003E8F49 /* User.m */,
+				E236C27C18912319003E8F49 /* FolderItem.h */,
+				E236C27D18912319003E8F49 /* FolderItem.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E236C28218913571003E8F49 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E236C283189135F9003E8F49 /* FolderItemCustomCell.h */,
+				E236C284189135F9003E8F49 /* FolderItemCustomCell.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		E252BCE2188F7F2400532B90 = {
 			isa = PBXGroup;
 			children = (
@@ -118,7 +156,8 @@
 		E252BCF4188F7F2400532B90 /* DocuSign */ = {
 			isa = PBXGroup;
 			children = (
-				E2FC83E71890B50700EEE39E /* Models */,
+				E236C28218913571003E8F49 /* Views */,
+				E236C2721890EEA1003E8F49 /* Models */,
 				E2FC83E81890B50700EEE39E /* Operations */,
 				E252BD24188F7FFE00532B90 /* Application */,
 				E252BD27188F7FFE00532B90 /* ViewControllers */,
@@ -170,19 +209,18 @@
 		E252BD27188F7FFE00532B90 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				E252BD28188F7FFE00532B90 /* ViewController.h */,
-				E252BD29188F7FFE00532B90 /* ViewController.m */,
+				E236C28618914972003E8F49 /* DocumentDetailsViewController.h */,
+				E236C28718914972003E8F49 /* DocumentDetailsViewController.m */,
+				E236C2791891111E003E8F49 /* DocumentsListViewController.h */,
+				E236C27A1891111E003E8F49 /* DocumentsListViewController.m */,
 				E2FC83EF1890C96D00EEE39E /* LoginViewController.h */,
 				E2FC83F01890C96D00EEE39E /* LoginViewController.m */,
+				E236C27618910D8D003E8F49 /* MenuViewController.h */,
+				E236C27718910D8D003E8F49 /* MenuViewController.m */,
+				E236C27F18912F92003E8F49 /* WebViewController.h */,
+				E236C28018912F92003E8F49 /* WebViewController.m */,
 			);
 			path = ViewControllers;
-			sourceTree = "<group>";
-		};
-		E2FC83E71890B50700EEE39E /* Models */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		E2FC83E81890B50700EEE39E /* Operations */ = {
@@ -292,9 +330,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				E252BD2A188F7FFE00532B90 /* AppDelegate.m in Sources */,
+				E236C27B1891111E003E8F49 /* DocumentsListViewController.m in Sources */,
+				E236C28818914972003E8F49 /* DocumentDetailsViewController.m in Sources */,
+				E236C27E18912319003E8F49 /* FolderItem.m in Sources */,
 				E252BCFB188F7F2400532B90 /* main.m in Sources */,
+				E236C28118912F92003E8F49 /* WebViewController.m in Sources */,
+				E236C2751890EEAD003E8F49 /* User.m in Sources */,
 				E2FC83EB1890B55100EEE39E /* DocuSignClient.m in Sources */,
-				E252BD2B188F7FFE00532B90 /* ViewController.m in Sources */,
+				E236C285189135F9003E8F49 /* FolderItemCustomCell.m in Sources */,
+				E236C27818910D8D003E8F49 /* MenuViewController.m in Sources */,
 				E2FC83F11890C96D00EEE39E /* LoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
