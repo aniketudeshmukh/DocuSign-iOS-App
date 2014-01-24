@@ -11,8 +11,9 @@
 typedef NS_ENUM(NSInteger, DSFolderType) {
     AwaitingMySignature = 0,
     Drafts,
-    Completed,
     OutForSignature,
+    Completed,
+    Downloaded
 };
 
 @interface DocuSignClient : NSObject

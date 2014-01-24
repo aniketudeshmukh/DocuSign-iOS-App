@@ -11,6 +11,7 @@
 #import "WebViewController.h"
 #import "FolderItem.h"
 #import "FolderItemCustomCell.h"
+#import "MBProgressHUD.h"
 
 @interface DocumentsListViewController ()
 @property (nonatomic,strong) NSArray * folderItems;
@@ -20,26 +21,41 @@
 
 -(void)viewDidLoad {
     [super viewDidLoad];
-//    self.refreshControl = [UIRefreshControl new];
-//    self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull To Refresh"];
-//    [self.refreshControl addTarget:self action:@selector(fetchDocuments) forControlEvents:UIControlEventValueChanged];
+    [self configureView];
     [self fetchDocuments];
+}
+
+-(void)configureView {
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull To Refresh"];
+    [self.refreshControl addTarget:self action:@selector(fetchDocuments) forControlEvents:UIControlEventValueChanged];
+    [self.refreshControl beginRefreshing];
+    [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
 }
 
 -(void)fetchDocuments {
     if (self.refreshControl) self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refreshing..."];
     DocuSignClient * client = [DocuSignClient sharedInstance];
-    [client getEnvelopesFromFolder:self.folderType onCompletion:^(NSArray *array, NSError *error) {
-        self.folderItems = array;
-        [self.tableView reloadData];
-//        if (self.refreshControl != nil && self.refreshControl.isRefreshing == YES) {
-//            [self.refreshControl endRefreshing];
-//        }
-    }];
+    
+#warning TO DO    // If Downlaoded
+
+    if (self.folderType == Downloaded) {
+        //TODO: FetchDocuments from Local folder.
+    } else {
+        [client getEnvelopesFromFolder:self.folderType onCompletion:^(NSArray *array, NSError *error) {
+            self.folderItems = array;
+            [MBProgressHUD hideAllHUDsForView:self.tableView animated:NO];
+            if (self.refreshControl != nil && self.refreshControl.isRefreshing == YES) {
+                [self.refreshControl endRefreshing];
+                if (self.refreshControl) self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull To Refresh"];
+            }
+            [self.tableView reloadData];
+        }];
+    }
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return (self.folderItems.count == 0) ? 1 :self.folderItems.count;
+    return (self.folderItems.count == 0) ? (self.refreshControl.isRefreshing) ? 0 : 1 : self.folderItems.count;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

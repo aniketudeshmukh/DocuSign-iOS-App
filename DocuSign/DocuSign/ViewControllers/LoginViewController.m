@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "DocuSignClient.h"
+#import "MBProgressHUD.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *userTextField;
@@ -19,6 +20,8 @@
 @implementation LoginViewController
 
 - (IBAction)login {
+    MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = @"Logging In...";
     [self.userTextField resignFirstResponder];
     [self.passwordTextField resignFirstResponder];
 
@@ -27,6 +30,7 @@
 
     DocuSignClient * client = [DocuSignClient sharedInstance];
     [client loginUser:user password:password onCompletion:^(NSError *error) {
+        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
         if (error) {
             NSLog(@"Login Failed!");
             NSLog(@"Error Code : %d",error.code);

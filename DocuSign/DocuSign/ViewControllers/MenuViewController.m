@@ -34,10 +34,13 @@
                 folderType = Completed;
                 break;
             default:
+                folderType = Downloaded;
                 break;
         }
         if ([segue.destinationViewController isKindOfClass:[DocumentsListViewController class]]) {
             DocumentsListViewController * destinationVC = (DocumentsListViewController *)segue.destinationViewController;
+            
+            destinationVC.title = [self.tableView cellForRowAtIndexPath:indexPath].textLabel.text;
             destinationVC.folderType = folderType;
         }
     }
@@ -45,7 +48,12 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section == 0) {
-        [self performSegueWithIdentifier:@"ShowDocumentsList" sender:indexPath];
+//        if (indexPath.row != [self tableView:tableView numberOfRowsInSection:indexPath.section] - 1) {
+//            //Show Downloaded Documents
+//        }
+//        else {
+            [self performSegueWithIdentifier:@"ShowDocumentsList" sender:indexPath];
+//        }
     }
 }
 @end

@@ -15,6 +15,7 @@ static NSString * const kIntegratorKey = @"CAPG-db179a1d-0379-40d9-8b38-4b1717cd
 
 //Relative URLs
 static NSString * const kFoldersURL = @"/folders";
+static NSString * const kTemplatesURL = @"/templates";
 static NSString * const kEnvelopesAwaitingMySignatureURL = @"/search_folders/awaiting_my_signature";
 static NSString * const kEnvelopesDraftsURL = @"/search_folders/drafts";
 static NSString * const kEnvelopesCompletedURL = @"/search_folders/completed";
@@ -37,7 +38,6 @@ static NSString * const kEnvelopesOutForSignatureURL = @"/search_folders/out_for
     return sharedInstance;
 }
 
-//Lazy instanciation
 -(NSURLSession *)session {
     if (!_session) {
         NSURLSessionConfiguration * configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
@@ -97,9 +97,12 @@ static NSString * const kEnvelopesOutForSignatureURL = @"/search_folders/out_for
                 
                 NSString * errorCode = jsonResponse[@"errorCode"];
                 if (!errorCode) {
+                    //Remove Duplicate Records
+                    NSArray * distinctObjects = [[NSOrderedSet orderedSetWithArray:jsonResponse[@"folderItems"]] array];
+                    
                     //Process Valid Response
                     folderItemsArray = [NSMutableArray array];
-                    for (NSDictionary * object in jsonResponse[@"folderItems"]) {
+                    for (NSDictionary * object in distinctObjects) {
                         FolderItem * item = [[FolderItem alloc] init];
                         [item setAttributes:object];
                         [folderItemsArray addObject:item];
@@ -127,7 +130,7 @@ static NSString * const kEnvelopesOutForSignatureURL = @"/search_folders/out_for
     [request setHTTPMethod:@"POST"];
     [request setAllHTTPHeaderFields:@{@"X-DocuSign-Authentication" : self.authenticationString, @"Content-Type" : @"application/json", @"Accept" : @"application/json"}];
     
-    NSDictionary *embeddedRequestData = @{@"returnUrl": @"http://www.docusign.com/devcenter",
+    NSDictionary *embeddedRequestData = @{@"returnUrl": @"http://done",
                                           @"authenticationMethod" : @"none",
                                           @"email" : self.currentUser.email,
                                           @"userName" : self.currentUser.userName,
@@ -160,6 +163,75 @@ static NSString * const kEnvelopesOutForSignatureURL = @"/search_folders/out_for
         }
         
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{ completionHandler(receipientViewURL,error); }];
+    }];
+    [task resume];
+}
+
+-(void)sendRequestForSigningDocument:(NSString *)documentName receipient:(NSString *)name email:(NSString *)email subject:(NSString *)subject emailBody:(NSString *)emailbody onCompletion:(void(^)(NSString * receipientViewURL, NSError * error))completionHandler {
+    NSString *envelopesURL = [NSMutableString stringWithFormat:@"%@/envelopes",self.currentUser.baseUrl];
+    NSMutableURLRequest *signatureRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:envelopesURL]];
+    [signatureRequest setHTTPMethod:@"POST"];
+    [signatureRequest setURL:[NSURL URLWithString:envelopesURL]];
+    // construct a JSON formatted signature request body (multi-line for readability)
+    NSDictionary *signatureRequestData =
+    @{@"accountId": self.currentUser.accountId,
+      @"emailSubject" : @"Signature Request on Document API call",
+      @"emailBlurb" : @"email body",
+      @"documents" : [NSArray arrayWithObjects: @{@"documentId":@"1", @"name": documentName}, nil ],
+      @"recipients" : @{ @"signers": [NSArray arrayWithObjects:
+                                      @{@"email": email,
+                                        @"name": name,
+                                        @"recipientId": @"1",
+                                        @"tabs": @{ @"signHereTabs": [NSArray arrayWithObjects:
+                                                                      @{@"xPosition": @"100",
+                                                                        @"yPosition": @"100",
+                                                                        @"documentId": @"1",
+                                                                        @"pageNumber": @"1"}, nil ]}}, nil ] },
+      @"status" : @"sent"
+      };
+    // convert dictionary object to JSON formatted string
+    NSString *sigRequestDataString = [self jsonStringFromObject:signatureRequestData];
+    // read document bytes and place in the request
+    NSString *appDirectory = [[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent];
+    NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@", appDirectory, documentName];
+    // use an NSData object to store the document bytes
+    NSData *filedata = [NSData dataWithContentsOfFile:fullFilePath];
+    // create the boundary separated request body...
+    NSMutableData *body = [NSMutableData data];
+    [body appendData:[[NSString stringWithFormat:
+                       @"\r\n"
+                       "\r\n"
+                       "--AAA\r\n"
+                       "Content-Type: application/json\r\n"
+                       "Content-Disposition: form-data\r\n"
+                       "\r\n"
+                       "%@\r\n"
+                       "--AAA\r\n"
+                       "Content-Type: application/pdf\r\n"
+                       "Content-Disposition: file; filename=\"%@\"; documentid=1; fileExtension=\"pdf\" \r\n"
+                       "\r\n",
+                       sigRequestDataString, documentName] dataUsingEncoding:NSUTF8StringEncoding]];
+    // next append the document bytes
+    [body appendData:filedata];
+    // append closing boundary and CRLFs
+    [body appendData:[[NSString stringWithFormat:
+                       @"\r\n"
+                       "--AAA--\r\n"
+                       "\r\n"] dataUsingEncoding:NSUTF8StringEncoding]];
+    // add the body to the request
+    [signatureRequest setHTTPBody:body];
+    // authentication and content-type headers
+    [signatureRequest setValue:self.authenticationString forHTTPHeaderField:@"X-DocuSign-Authentication"];
+    [signatureRequest setValue:@"multipart/form-data; boundary=AAA" forHTTPHeaderField:@"Content-Type"];
+    //*** make the signature request!
+    
+    NSURLSessionDataTask * task = [self.session dataTaskWithRequest:signatureRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSError *jsonError = nil;
+        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
+        
+        //--- display results
+        NSLog(@"Envelope Sent! Response is: %@\n", responseDictionary);
+
     }];
     [task resume];
 }

@@ -8,16 +8,17 @@
 
 #import "WebViewController.h"
 #import "DocuSignClient.h"
+#import "MBProgressHUD.h"
 
-@interface WebViewController ()
+@interface WebViewController ()<UIWebViewDelegate>
 @property (weak, nonatomic) IBOutlet UIWebView *webView;
 @end
 
 @implementation WebViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
 	DocuSignClient * client = [DocuSignClient sharedInstance];
     [client getRecipientViewURLForEnvelopeId:self.item.envelopeId onCompletion:^(NSString *receipientViewURL, NSError *error) {
         if (!error) {
@@ -27,8 +28,24 @@
         }
         else {
             NSLog(@"Error : %@", error);
+            [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
         }
     }];
+}
+
+-(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
+    NSLog(@"Request: %@", request);
+    NSLog(@"Navigation Type: %d", navigationType);
+    
+    if ([request.URL.absoluteString isEqualToString:@"http://done/?event=viewing_complete"]) {
+        [self.navigationController popViewControllerAnimated:YES];
+        return NO;
+    }
+    return YES;
+}
+
+-(void)webViewDidFinishLoad:(UIWebView *)webView {
+    [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
 }
 
 @end
