@@ -10,4 +10,5 @@
 #import "FolderItem.h"
 @interface WebViewController : UIViewController
 @property (strong, nonatomic) FolderItem * item;
+@property (strong, nonatomic) NSURL * url;
 @end

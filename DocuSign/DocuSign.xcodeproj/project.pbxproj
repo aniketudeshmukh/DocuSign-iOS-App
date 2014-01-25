@@ -29,8 +29,11 @@
 		E252BD2A188F7FFE00532B90 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E252BD26188F7FFE00532B90 /* AppDelegate.m */; };
 		E2A8145918927230001B3845 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A8145818927230001B3845 /* MBProgressHUD.m */; };
 		E2A8145C18928162001B3845 /* SignatureRequestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A8145B18928162001B3845 /* SignatureRequestViewController.m */; };
+		E2D998DF18938E23004F3799 /* DownloadedDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D998DE18938E23004F3799 /* DownloadedDocument.m */; };
+		E2D998E21893C5AD004F3799 /* TemplatesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D998E11893C5AD004F3799 /* TemplatesViewController.m */; };
 		E2FC83EB1890B55100EEE39E /* DocuSignClient.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FC83EA1890B55100EEE39E /* DocuSignClient.m */; };
 		E2FC83F11890C96D00EEE39E /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FC83F01890C96D00EEE39E /* LoginViewController.m */; };
+		E2FEF4B51892D1BA0015E07F /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2FEF4B41892D1BA0015E07F /* AddressBookUI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,10 +82,15 @@
 		E2A8145818927230001B3845 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		E2A8145A18928162001B3845 /* SignatureRequestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignatureRequestViewController.h; sourceTree = "<group>"; };
 		E2A8145B18928162001B3845 /* SignatureRequestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignatureRequestViewController.m; sourceTree = "<group>"; };
+		E2D998DD18938E23004F3799 /* DownloadedDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadedDocument.h; sourceTree = "<group>"; };
+		E2D998DE18938E23004F3799 /* DownloadedDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadedDocument.m; sourceTree = "<group>"; };
+		E2D998E01893C5AD004F3799 /* TemplatesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemplatesViewController.h; sourceTree = "<group>"; };
+		E2D998E11893C5AD004F3799 /* TemplatesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemplatesViewController.m; sourceTree = "<group>"; };
 		E2FC83E91890B55100EEE39E /* DocuSignClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DocuSignClient.h; sourceTree = "<group>"; };
 		E2FC83EA1890B55100EEE39E /* DocuSignClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DocuSignClient.m; sourceTree = "<group>"; };
 		E2FC83EF1890C96D00EEE39E /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		E2FC83F01890C96D00EEE39E /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		E2FEF4B41892D1BA0015E07F /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +98,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2FEF4B51892D1BA0015E07F /* AddressBookUI.framework in Frameworks */,
 				E252BCF1188F7F2400532B90 /* CoreGraphics.framework in Frameworks */,
 				E252BCF3188F7F2400532B90 /* UIKit.framework in Frameworks */,
 				E252BCEF188F7F2400532B90 /* Foundation.framework in Frameworks */,
@@ -116,6 +125,8 @@
 				E236C2741890EEAD003E8F49 /* User.m */,
 				E236C27C18912319003E8F49 /* FolderItem.h */,
 				E236C27D18912319003E8F49 /* FolderItem.m */,
+				E2D998DD18938E23004F3799 /* DownloadedDocument.h */,
+				E2D998DE18938E23004F3799 /* DownloadedDocument.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -132,7 +143,6 @@
 		E252BCE2188F7F2400532B90 = {
 			isa = PBXGroup;
 			children = (
-				E2A8145618927230001B3845 /* Externals */,
 				E252BCF4188F7F2400532B90 /* DocuSign */,
 				E252BD13188F7F2500532B90 /* DocuSignTests */,
 				E252BCED188F7F2400532B90 /* Frameworks */,
@@ -152,6 +162,7 @@
 		E252BCED188F7F2400532B90 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E2FEF4B41892D1BA0015E07F /* AddressBookUI.framework */,
 				E252BCEE188F7F2400532B90 /* Foundation.framework */,
 				E252BCF0188F7F2400532B90 /* CoreGraphics.framework */,
 				E252BCF2188F7F2400532B90 /* UIKit.framework */,
@@ -163,13 +174,14 @@
 		E252BCF4188F7F2400532B90 /* DocuSign */ = {
 			isa = PBXGroup;
 			children = (
-				E236C28218913571003E8F49 /* Views */,
+				E252BD24188F7FFE00532B90 /* Application */,
 				E236C2721890EEA1003E8F49 /* Models */,
 				E2FC83E81890B50700EEE39E /* Operations */,
-				E252BD24188F7FFE00532B90 /* Application */,
 				E252BD27188F7FFE00532B90 /* ViewControllers */,
+				E236C28218913571003E8F49 /* Views */,
 				E252BD00188F7F2400532B90 /* Main.storyboard */,
 				E252BD06188F7F2400532B90 /* Images.xcassets */,
+				E2A8145618927230001B3845 /* Externals */,
 				E252BCF5188F7F2400532B90 /* Supporting Files */,
 			);
 			path = DocuSign;
@@ -228,6 +240,8 @@
 				E236C28018912F92003E8F49 /* WebViewController.m */,
 				E2A8145A18928162001B3845 /* SignatureRequestViewController.h */,
 				E2A8145B18928162001B3845 /* SignatureRequestViewController.m */,
+				E2D998E01893C5AD004F3799 /* TemplatesViewController.h */,
+				E2D998E11893C5AD004F3799 /* TemplatesViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -238,8 +252,7 @@
 				E2A8145718927230001B3845 /* MBProgressHUD.h */,
 				E2A8145818927230001B3845 /* MBProgressHUD.m */,
 			);
-			name = Externals;
-			path = DocuSign/Externals;
+			path = Externals;
 			sourceTree = "<group>";
 		};
 		E2FC83E81890B50700EEE39E /* Operations */ = {
@@ -355,12 +368,14 @@
 				E236C27E18912319003E8F49 /* FolderItem.m in Sources */,
 				E252BCFB188F7F2400532B90 /* main.m in Sources */,
 				E236C28118912F92003E8F49 /* WebViewController.m in Sources */,
+				E2D998E21893C5AD004F3799 /* TemplatesViewController.m in Sources */,
 				E236C2751890EEAD003E8F49 /* User.m in Sources */,
 				E2A8145918927230001B3845 /* MBProgressHUD.m in Sources */,
 				E2FC83EB1890B55100EEE39E /* DocuSignClient.m in Sources */,
 				E236C285189135F9003E8F49 /* FolderItemCustomCell.m in Sources */,
 				E236C27818910D8D003E8F49 /* MenuViewController.m in Sources */,
 				E2FC83F11890C96D00EEE39E /* LoginViewController.m in Sources */,
+				E2D998DF18938E23004F3799 /* DownloadedDocument.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

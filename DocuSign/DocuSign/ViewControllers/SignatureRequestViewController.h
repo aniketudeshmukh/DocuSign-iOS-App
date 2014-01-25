@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SignatureRequestViewController : UIViewController
-
+@interface SignatureRequestViewController : UITableViewController
+-(IBAction)unwindToSignatureRequestViewController:(UIStoryboardSegue *)unwindSegue;
 @end
