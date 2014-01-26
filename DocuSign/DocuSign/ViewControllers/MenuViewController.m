@@ -9,6 +9,7 @@
 #import "MenuViewController.h"
 #import "DocuSignClient.h"
 #import "DocumentsListViewController.h"
+#import "SignatureRequestViewController.h"
 
 @interface MenuViewController ()
 
@@ -31,10 +32,8 @@
                 folderType = OutForSignature;
                 break;
             case 3:
-                folderType = Completed;
-                break;
             default:
-                folderType = Downloaded;
+                folderType = Completed;
                 break;
         }
         if ([segue.destinationViewController isKindOfClass:[DocumentsListViewController class]]) {
@@ -44,16 +43,26 @@
             destinationVC.folderType = folderType;
         }
     }
+    else if ([segue.identifier isEqualToString:@"RequestSignatureUsingTemplate"]) {
+        if ([segue.destinationViewController isKindOfClass:[SignatureRequestViewController class]]) {
+            SignatureRequestViewController * destinationVC = (SignatureRequestViewController *)segue.destinationViewController;
+            destinationVC.signatureRequestType = UsingTemplate;
+        }
+    }
+    else if ([segue.identifier isEqualToString:@"RequestSignatureUsingDocument"]) {
+        if ([segue.destinationViewController isKindOfClass:[SignatureRequestViewController class]]) {
+            SignatureRequestViewController * destinationVC = (SignatureRequestViewController *)segue.destinationViewController;
+            destinationVC.signatureRequestType = UsingDocument;
+        }
+    }
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0) {
-//        if (indexPath.row != [self tableView:tableView numberOfRowsInSection:indexPath.section] - 1) {
-//            //Show Downloaded Documents
-//        }
-//        else {
+    if (indexPath.section == 0 && indexPath.row != [tableView numberOfRowsInSection:indexPath.section] - 1) {
             [self performSegueWithIdentifier:@"ShowDocumentsList" sender:indexPath];
-//        }
     }
 }
+
+#pragma mark Navigation
+
 @end

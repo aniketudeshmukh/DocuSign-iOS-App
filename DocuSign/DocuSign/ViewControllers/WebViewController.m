@@ -18,7 +18,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = @"Loading...";
     if (self.url) {
         [self.webView loadRequest:[NSURLRequest requestWithURL:self.url]];
 //        self.webView.clipsToBounds = NO;
@@ -39,11 +40,13 @@
     }
 }
 
+#pragma mark - UIWebViewDelegate
+
 -(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     NSLog(@"Request: %@", request);
     NSLog(@"Navigation Type: %d", navigationType);
     
-    if ([request.URL.absoluteString isEqualToString:@"http://done/?event=viewing_complete"]) {
+    if ([request.URL.host isEqualToString:@"done"]) {
         [self.navigationController popViewControllerAnimated:YES];
         return NO;
     }

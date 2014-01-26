@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSInteger, SignatureRequestType) {
+    UsingTemplate,
+    UsingDocument
+};
+
 @interface SignatureRequestViewController : UITableViewController
+@property (nonatomic, assign) SignatureRequestType signatureRequestType;
 -(IBAction)unwindToSignatureRequestViewController:(UIStoryboardSegue *)unwindSegue;
 @end

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface TemplatesViewController : UITableViewController
-
+@property (nonatomic,strong,readonly) NSArray * templates;
 @end

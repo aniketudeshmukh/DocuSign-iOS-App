@@ -13,6 +13,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    [self addLocalDocuments];
     return YES;
 }
 							
@@ -41,6 +42,26 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)addLocalDocuments {
+    //Copy Some Dummy Documents to Local directory
+    if (![[[NSUserDefaults standardUserDefaults] valueForKey:@"DocumentsCopied"] boolValue]) {
+        NSFileManager * fileManager = [NSFileManager defaultManager];
+        NSString * documentsDirectory = [(NSURL *)[[fileManager URLsForDirectory:NSDocumentDirectory
+                                                                       inDomains:NSUserDomainMask] lastObject] path];
+
+        NSArray * tempFiles = @[@"Dummy Document.docx",@"Another Dummy Document.docx"];
+        [tempFiles enumerateObjectsUsingBlock:^(NSString * fileName, NSUInteger idx, BOOL *stop) {
+            NSError * error = nil;
+            NSString * path = [[NSBundle mainBundle] pathForResource:fileName ofType:nil];
+            [fileManager copyItemAtPath:path toPath:[documentsDirectory stringByAppendingPathComponent:fileName] error:&error];
+             if (error) NSLog(@"Failed To Copy %@\n Due To:%@",fileName,error.localizedDescription);
+        }];
+    }
+    [[NSUserDefaults standardUserDefaults] setValue:@YES forKey:@"DocumentsCopied"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
 }
 
 @end

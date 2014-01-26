@@ -8,6 +8,7 @@
 
 #import "DocuSignClient.h"
 #import "FolderItem.h"
+#import "EnvelopeTemplate.h"
 
 static NSString * const kDocuSignURL = @"https://demo.docusign.net/restapi/v2/login_information";
 static NSString * const kIntegratorKey = @"CAPG-db179a1d-0379-40d9-8b38-4b1717cd4553";
@@ -22,7 +23,7 @@ static NSString * const kEnvelopesOutForSignatureURL = @"/search_folders/out_for
 
 @interface DocuSignClient()
 @property (nonatomic, strong) NSURLSession * session;
-@property (nonatomic, strong) NSString * authenticationString;
+@property (nonatomic, copy) NSString * authenticationString;
 @property (nonatomic, strong) User * currentUser;
 @end
 
@@ -122,6 +123,49 @@ static NSString * const kEnvelopesOutForSignatureURL = @"/search_folders/out_for
     [task resume];
 }
 
+
+-(void)getAllTemplatesOnCompletion:(void(^)(NSArray * array, NSError * error))completionHandler {
+    NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[self.currentUser.baseUrl stringByAppendingString:kTemplatesURL]]];
+    [request setAllHTTPHeaderFields:@{@"X-DocuSign-Authentication" : self.authenticationString, @"Content-Type" : @"application/json", @"Accept" : @"application/json"}];
+    NSURLSessionDataTask * task = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        NSMutableArray * templatesArray = nil;
+        //Check for errors
+        if (!error) {
+            NSHTTPURLResponse * urlResponse = (NSHTTPURLResponse *) response;
+            if (urlResponse.statusCode == 200 || urlResponse.statusCode == 201) {
+                //Parse Response
+                NSDictionary * jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                NSLog(@"Response: %@", jsonResponse);
+
+                NSString * errorCode = jsonResponse[@"errorCode"];
+                if (!errorCode) {
+                    //Remove Duplicate Records
+                    NSArray * distinctObjects = [[NSOrderedSet orderedSetWithArray:jsonResponse[@"envelopeTemplates"]] array];
+
+                    //Process Valid Response
+                    templatesArray = [NSMutableArray array];
+                    for (NSDictionary * object in distinctObjects) {
+                         EnvelopeTemplate* template = [[EnvelopeTemplate alloc] init];
+                        [template setAttributes:object];
+                        [templatesArray addObject:template];
+                    }
+                }
+                else {
+                    NSString * message = jsonResponse[@"message"];
+                    error = [NSError errorWithDomain:errorCode code:-1 userInfo:@{NSLocalizedDescriptionKey : message}];
+                }
+            }
+            else {
+                error = [NSError errorWithDomain:@"Network Error" code:urlResponse.statusCode userInfo:@{NSLocalizedDescriptionKey : [NSHTTPURLResponse localizedStringForStatusCode:urlResponse.statusCode]}];
+            }
+        }
+
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{ completionHandler(templatesArray,error); }];
+    }];
+    [task resume];
+}
+
+
 -(void)getRecipientViewURLForEnvelopeId:(NSString *)envelopeId onCompletion:(void(^)(NSString * receipientViewURL, NSError * error))completionHandler {
     NSString * embeddedURL = [NSString stringWithFormat:@"%@/envelopes/%@/views/recipient", self.currentUser.baseUrl, envelopeId];
     
@@ -166,7 +210,7 @@ static NSString * const kEnvelopesOutForSignatureURL = @"/search_folders/out_for
     [task resume];
 }
 
--(void)sendRequestForSigningDocument:(NSString *)documentName receipient:(NSString *)name email:(NSString *)email subject:(NSString *)subject emailBody:(NSString *)emailbody onCompletion:(void(^)(NSString * receipientViewURL, NSError * error))completionHandler {
+-(void)sendRequestForSigningDocument:(NSString *)documentName documentPath:(NSString *)documentPath receipient:(NSString *)name email:(NSString *)email subject:(NSString *)subject emailBody:(NSString *)emailbody onCompletion:(void(^)(NSError * error))completionHandler {
     NSString *envelopesURL = [NSMutableString stringWithFormat:@"%@/envelopes",self.currentUser.baseUrl];
     NSMutableURLRequest *signatureRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:envelopesURL]];
     [signatureRequest setHTTPMethod:@"POST"];
@@ -174,27 +218,30 @@ static NSString * const kEnvelopesOutForSignatureURL = @"/search_folders/out_for
     // construct a JSON formatted signature request body (multi-line for readability)
     NSDictionary *signatureRequestData =
     @{@"accountId": self.currentUser.accountId,
-      @"emailSubject" : @"Signature Request on Document API call",
-      @"emailBlurb" : @"email body",
+      @"emailSubject" : subject,
+      @"emailBlurb" : emailbody,
       @"documents" : [NSArray arrayWithObjects: @{@"documentId":@"1", @"name": documentName}, nil ],
       @"recipients" : @{ @"signers": [NSArray arrayWithObjects:
                                       @{@"email": email,
                                         @"name": name,
                                         @"recipientId": @"1",
+                                        
                                         @"tabs": @{ @"signHereTabs": [NSArray arrayWithObjects:
                                                                       @{@"xPosition": @"100",
                                                                         @"yPosition": @"100",
                                                                         @"documentId": @"1",
-                                                                        @"pageNumber": @"1"}, nil ]}}, nil ] },
+                                                                        @"pageNumber": @"1"}, nil ]}
+
+                                        }, nil ] },
       @"status" : @"sent"
       };
     // convert dictionary object to JSON formatted string
     NSString *sigRequestDataString = [self jsonStringFromObject:signatureRequestData];
     // read document bytes and place in the request
-    NSString *appDirectory = [[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent];
-    NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@", appDirectory, documentName];
+//    NSString *appDirectory = [[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent];
+//    NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@", appDirectory, documentName];
     // use an NSData object to store the document bytes
-    NSData *filedata = [NSData dataWithContentsOfFile:fullFilePath];
+    NSData *filedata = [NSData dataWithContentsOfFile:documentPath];
     // create the boundary separated request body...
     NSMutableData *body = [NSMutableData data];
     [body appendData:[[NSString stringWithFormat:
@@ -225,12 +272,17 @@ static NSString * const kEnvelopesOutForSignatureURL = @"/search_folders/out_for
     //*** make the signature request!
     
     NSURLSessionDataTask * task = [self.session dataTaskWithRequest:signatureRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSError *jsonError = nil;
+#warning Error Handling
+//        NSError * error = nil;
+        NSError * jsonError = nil;
         NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
         
         //--- display results
         NSLog(@"Envelope Sent! Response is: %@\n", responseDictionary);
 
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            completionHandler(error);
+        }];
     }];
     [task resume];
 }
@@ -321,7 +373,7 @@ static NSString * const kEnvelopesOutForSignatureURL = @"/search_folders/out_for
     }];
 }
 
--(void)sendRequestForSigningTemplateId:(NSString *)templateId receipient:(NSString *)name email:(NSString *)email subject:(NSString *)subject emailBody:(NSString *)emailbody onCompletion:(void(^)(NSString * receipientViewURL, NSError * error))completionHandler {
+-(void)sendRequestForSigningTemplateId:(NSString *)templateId receipient:(NSString *)name email:(NSString *)email subject:(NSString *)subject emailBody:(NSString *)emailbody onCompletion:(void(^)(NSError * error))completionHandler {
 
     ///////////////////////////////////////////////////////////////////////////////////////
     // Request Signature via Template
@@ -337,10 +389,10 @@ static NSString * const kEnvelopesOutForSignatureURL = @"/search_folders/out_for
 
     // construct a JSON formatted signature request body (multi-line for readability)
     NSDictionary *signatureRequestData = @{@"accountId": self.currentUser.accountId,
-                                           @"emailSubject" : @"Template API call",
-                                           @"emailBlurb" : @"email body",
+                                           @"emailSubject" : subject,
+                                           @"emailBlurb" : emailbody,
                                            @"templateId" : templateId,
-                                           @"templateRoles" : [NSArray arrayWithObjects: @{@"email":email, @"name": name}, nil ],
+                                           @"templateRoles" : [NSArray arrayWithObjects: @{@"email":email, @"name": name, @"roleName" : @"receipients"}, nil ],
                                            @"status" : @"sent"
                                            };
 
@@ -356,10 +408,14 @@ static NSString * const kEnvelopesOutForSignatureURL = @"/search_folders/out_for
 
     //*** make the signature request!
     [NSURLConnection sendAsynchronousRequest:signatureRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *envelopeResponse, NSData *envelopeData, NSError *envelopeError) {
-
-        NSError *jsonError = nil;
+#warning Todo Error Handler
+        NSError * error;
+        NSError * jsonError = nil;
         NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:envelopeData options:kNilOptions error:&jsonError];
         NSLog(@"Envelope Sent!  Response is: %@\n", responseDictionary);
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            completionHandler(error);
+        }];
     }];
 }
 

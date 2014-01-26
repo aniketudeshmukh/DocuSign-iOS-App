@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @interface DownloadedDocument : NSObject
-@property (nonatomic, strong) NSString * documentName;
-@property (nonatomic, strong) NSString * documentPath;
-@property (nonatomic, strong) NSString * summaryPath;
+@property (nonatomic, copy) NSString * documentName;
+@property (nonatomic, copy) NSString * documentPath;
+@property (nonatomic, copy) NSString * summaryPath;
 @end

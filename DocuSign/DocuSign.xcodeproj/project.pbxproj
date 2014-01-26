@@ -29,6 +29,12 @@
 		E252BD2A188F7FFE00532B90 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E252BD26188F7FFE00532B90 /* AppDelegate.m */; };
 		E2A8145918927230001B3845 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A8145818927230001B3845 /* MBProgressHUD.m */; };
 		E2A8145C18928162001B3845 /* SignatureRequestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A8145B18928162001B3845 /* SignatureRequestViewController.m */; };
+		E2ABC6131894BC4700CD289C /* EnvelopeTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2ABC6121894BC4700CD289C /* EnvelopeTemplate.m */; };
+		E2D4005D1894F8AA00A2F6D8 /* LocalDocumentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D4005C1894F8AA00A2F6D8 /* LocalDocumentsViewController.m */; };
+		E2D400601895051400A2F6D8 /* LocalDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D4005F1895051400A2F6D8 /* LocalDocument.m */; };
+		E2D4006418950B6E00A2F6D8 /* Another Dummy Document.docx in Resources */ = {isa = PBXBuildFile; fileRef = E2D400611895096500A2F6D8 /* Another Dummy Document.docx */; };
+		E2D4006518950B6E00A2F6D8 /* Dummy Document.docx in Resources */ = {isa = PBXBuildFile; fileRef = E2D400621895096500A2F6D8 /* Dummy Document.docx */; };
+		E2D4006818951A4800A2F6D8 /* DownloadedDocumentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D4006718951A4800A2F6D8 /* DownloadedDocumentsViewController.m */; };
 		E2D998DF18938E23004F3799 /* DownloadedDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D998DE18938E23004F3799 /* DownloadedDocument.m */; };
 		E2D998E21893C5AD004F3799 /* TemplatesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D998E11893C5AD004F3799 /* TemplatesViewController.m */; };
 		E2FC83EB1890B55100EEE39E /* DocuSignClient.m in Sources */ = {isa = PBXBuildFile; fileRef = E2FC83EA1890B55100EEE39E /* DocuSignClient.m */; };
@@ -82,6 +88,16 @@
 		E2A8145818927230001B3845 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		E2A8145A18928162001B3845 /* SignatureRequestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignatureRequestViewController.h; sourceTree = "<group>"; };
 		E2A8145B18928162001B3845 /* SignatureRequestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignatureRequestViewController.m; sourceTree = "<group>"; };
+		E2ABC6111894BC4700CD289C /* EnvelopeTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvelopeTemplate.h; sourceTree = "<group>"; };
+		E2ABC6121894BC4700CD289C /* EnvelopeTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnvelopeTemplate.m; sourceTree = "<group>"; };
+		E2D4005B1894F8AA00A2F6D8 /* LocalDocumentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalDocumentsViewController.h; sourceTree = "<group>"; };
+		E2D4005C1894F8AA00A2F6D8 /* LocalDocumentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalDocumentsViewController.m; sourceTree = "<group>"; };
+		E2D4005E1895051400A2F6D8 /* LocalDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalDocument.h; sourceTree = "<group>"; };
+		E2D4005F1895051400A2F6D8 /* LocalDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalDocument.m; sourceTree = "<group>"; };
+		E2D400611895096500A2F6D8 /* Another Dummy Document.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Another Dummy Document.docx"; sourceTree = "<group>"; };
+		E2D400621895096500A2F6D8 /* Dummy Document.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dummy Document.docx"; sourceTree = "<group>"; };
+		E2D4006618951A4800A2F6D8 /* DownloadedDocumentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadedDocumentsViewController.h; sourceTree = "<group>"; };
+		E2D4006718951A4800A2F6D8 /* DownloadedDocumentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadedDocumentsViewController.m; sourceTree = "<group>"; };
 		E2D998DD18938E23004F3799 /* DownloadedDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadedDocument.h; sourceTree = "<group>"; };
 		E2D998DE18938E23004F3799 /* DownloadedDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadedDocument.m; sourceTree = "<group>"; };
 		E2D998E01893C5AD004F3799 /* TemplatesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemplatesViewController.h; sourceTree = "<group>"; };
@@ -127,6 +143,10 @@
 				E236C27D18912319003E8F49 /* FolderItem.m */,
 				E2D998DD18938E23004F3799 /* DownloadedDocument.h */,
 				E2D998DE18938E23004F3799 /* DownloadedDocument.m */,
+				E2ABC6111894BC4700CD289C /* EnvelopeTemplate.h */,
+				E2ABC6121894BC4700CD289C /* EnvelopeTemplate.m */,
+				E2D4005E1895051400A2F6D8 /* LocalDocument.h */,
+				E2D4005F1895051400A2F6D8 /* LocalDocument.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -190,6 +210,7 @@
 		E252BCF5188F7F2400532B90 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E2D400631895096B00A2F6D8 /* Local Documents */,
 				E252BCF6188F7F2400532B90 /* DocuSign-Info.plist */,
 				E252BCF7188F7F2400532B90 /* InfoPlist.strings */,
 				E252BCFA188F7F2400532B90 /* main.m */,
@@ -232,16 +253,20 @@
 				E236C28718914972003E8F49 /* DocumentDetailsViewController.m */,
 				E236C2791891111E003E8F49 /* DocumentsListViewController.h */,
 				E236C27A1891111E003E8F49 /* DocumentsListViewController.m */,
+				E2D4006618951A4800A2F6D8 /* DownloadedDocumentsViewController.h */,
+				E2D4006718951A4800A2F6D8 /* DownloadedDocumentsViewController.m */,
+				E2D4005B1894F8AA00A2F6D8 /* LocalDocumentsViewController.h */,
+				E2D4005C1894F8AA00A2F6D8 /* LocalDocumentsViewController.m */,
 				E2FC83EF1890C96D00EEE39E /* LoginViewController.h */,
 				E2FC83F01890C96D00EEE39E /* LoginViewController.m */,
 				E236C27618910D8D003E8F49 /* MenuViewController.h */,
 				E236C27718910D8D003E8F49 /* MenuViewController.m */,
-				E236C27F18912F92003E8F49 /* WebViewController.h */,
-				E236C28018912F92003E8F49 /* WebViewController.m */,
 				E2A8145A18928162001B3845 /* SignatureRequestViewController.h */,
 				E2A8145B18928162001B3845 /* SignatureRequestViewController.m */,
 				E2D998E01893C5AD004F3799 /* TemplatesViewController.h */,
 				E2D998E11893C5AD004F3799 /* TemplatesViewController.m */,
+				E236C27F18912F92003E8F49 /* WebViewController.h */,
+				E236C28018912F92003E8F49 /* WebViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -253,6 +278,15 @@
 				E2A8145818927230001B3845 /* MBProgressHUD.m */,
 			);
 			path = Externals;
+			sourceTree = "<group>";
+		};
+		E2D400631895096B00A2F6D8 /* Local Documents */ = {
+			isa = PBXGroup;
+			children = (
+				E2D400611895096500A2F6D8 /* Another Dummy Document.docx */,
+				E2D400621895096500A2F6D8 /* Dummy Document.docx */,
+			);
+			name = "Local Documents";
 			sourceTree = "<group>";
 		};
 		E2FC83E81890B50700EEE39E /* Operations */ = {
@@ -340,6 +374,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2D4006418950B6E00A2F6D8 /* Another Dummy Document.docx in Resources */,
+				E2D4006518950B6E00A2F6D8 /* Dummy Document.docx in Resources */,
 				E252BD07188F7F2400532B90 /* Images.xcassets in Resources */,
 				E252BCF9188F7F2400532B90 /* InfoPlist.strings in Resources */,
 				E252BD02188F7F2400532B90 /* Main.storyboard in Resources */,
@@ -363,11 +399,14 @@
 			files = (
 				E2A8145C18928162001B3845 /* SignatureRequestViewController.m in Sources */,
 				E252BD2A188F7FFE00532B90 /* AppDelegate.m in Sources */,
+				E2D4006818951A4800A2F6D8 /* DownloadedDocumentsViewController.m in Sources */,
+				E2D400601895051400A2F6D8 /* LocalDocument.m in Sources */,
 				E236C27B1891111E003E8F49 /* DocumentsListViewController.m in Sources */,
 				E236C28818914972003E8F49 /* DocumentDetailsViewController.m in Sources */,
 				E236C27E18912319003E8F49 /* FolderItem.m in Sources */,
 				E252BCFB188F7F2400532B90 /* main.m in Sources */,
 				E236C28118912F92003E8F49 /* WebViewController.m in Sources */,
+				E2ABC6131894BC4700CD289C /* EnvelopeTemplate.m in Sources */,
 				E2D998E21893C5AD004F3799 /* TemplatesViewController.m in Sources */,
 				E236C2751890EEAD003E8F49 /* User.m in Sources */,
 				E2A8145918927230001B3845 /* MBProgressHUD.m in Sources */,
@@ -375,6 +414,7 @@
 				E236C285189135F9003E8F49 /* FolderItemCustomCell.m in Sources */,
 				E236C27818910D8D003E8F49 /* MenuViewController.m in Sources */,
 				E2FC83F11890C96D00EEE39E /* LoginViewController.m in Sources */,
+				E2D4005D1894F8AA00A2F6D8 /* LocalDocumentsViewController.m in Sources */,
 				E2D998DF18938E23004F3799 /* DownloadedDocument.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

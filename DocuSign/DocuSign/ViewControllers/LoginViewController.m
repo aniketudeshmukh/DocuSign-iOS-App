@@ -14,10 +14,15 @@
 @property (weak, nonatomic) IBOutlet UITextField *userTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 - (IBAction)login;
-
 @end
 
 @implementation LoginViewController
+
+-(void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.passwordTextField.text = @"";
+}
+
 
 - (IBAction)login {
     MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
