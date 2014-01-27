@@ -61,8 +61,16 @@
                                     <action selector="login" destination="vXZ-lx-hvc" eventType="touchUpInside" id="BCW-Wh-EgS"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="DocuSignLogo" translatesAutoresizingMaskIntoConstraints="NO" id="167-T1-x1Z">
+                                <rect key="frame" x="75" y="448" width="170" height="100"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="167-T1-x1Z" secondAttribute="centerX" id="1ss-7m-c5B"/>
+                            <constraint firstItem="cZq-rp-Cxr" firstAttribute="top" secondItem="167-T1-x1Z" secondAttribute="bottom" constant="20" id="DNH-8Y-iGP"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Welcome To DocuSign" id="a3H-V7-pXb"/>
                     <connections>
@@ -1138,6 +1146,9 @@
             <point key="canvasLocation" x="2086" y="1160"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="DocuSignLogo" width="170" height="100"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
