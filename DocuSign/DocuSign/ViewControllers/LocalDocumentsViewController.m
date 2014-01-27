@@ -15,11 +15,13 @@
 
 @implementation LocalDocumentsViewController
 
-
+#pragma mark - UIViewController
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self fetchLocalDocuments];
 }
+
+#pragma mark - LocalDocumentsViewController
 
 - (void)fetchLocalDocuments {
     NSMutableArray * documents = [NSMutableArray array];
@@ -41,7 +43,8 @@
     self.documents = documents;
 }
 
-#pragma mark - Table view data source
+
+#pragma mark - UITableViewControllerDatasource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

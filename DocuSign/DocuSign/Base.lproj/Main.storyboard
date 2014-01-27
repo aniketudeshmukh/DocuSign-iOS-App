@@ -473,15 +473,15 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="detailDisclosureButton" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="WgZ-a3-mGQ" style="IBUITableViewCellStyleDefault" id="PkT-Rv-HAp">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="detailButton" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="WgZ-a3-mGQ" style="IBUITableViewCellStyleDefault" id="PkT-Rv-HAp">
                                 <rect key="frame" x="0.0" y="86" width="320" height="58"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PkT-Rv-HAp" id="fFe-l8-Szt">
-                                    <rect key="frame" x="0.0" y="0.0" width="253" height="57"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="273" height="57"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WgZ-a3-mGQ">
-                                            <rect key="frame" x="15" y="0.0" width="238" height="57"/>
+                                            <rect key="frame" x="15" y="0.0" width="258" height="57"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -489,10 +489,6 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
-                                <connections>
-                                    <segue destination="nDq-og-0rs" kind="push" identifier="ShowDownloadedDocument" id="gfL-9d-u5P"/>
-                                    <segue destination="nDq-og-0rs" kind="push" identifier="ShowDownloadedDocumentSummary" trigger="accessoryAction" id="vZZ-ke-o0S"/>
-                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -525,8 +521,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" fixedFrame="YES" text="Receipient:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5c2-a3-AmJ">
-                                                    <rect key="frame" x="10" y="13" width="73" height="17"/>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" fixedFrame="YES" text="Recipient:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5c2-a3-AmJ">
+                                                    <rect key="frame" x="10" y="13" width="65" height="17"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -546,7 +542,7 @@
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="chooseReceipient:" destination="hUd-Cc-GVq" eventType="touchUpInside" id="Svk-me-lCt"/>
+                                                        <action selector="chooseRecipient:" destination="hUd-Cc-GVq" eventType="touchUpInside" id="anS-Oa-hIQ"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -654,7 +650,7 @@
                         <outlet property="documentTypeLabel" destination="k2N-Sx-2dn" id="QNM-BP-fkr"/>
                         <outlet property="emailBodyTextView" destination="oO3-JQ-P7D" id="mkm-cn-o4a"/>
                         <outlet property="fileNameTextField" destination="2ZE-VU-j76" id="3N6-YA-LYr"/>
-                        <outlet property="receipientTextField" destination="FbX-k1-odX" id="57g-yx-tdb"/>
+                        <outlet property="recipientTextField" destination="FbX-k1-odX" id="LYQ-Jp-ZIZ"/>
                         <outlet property="subjectTextField" destination="XjX-MY-pc0" id="WLA-ly-wfx"/>
                         <segue destination="tdm-fz-imK" kind="modal" identifier="ShowLocalDcouments" id="pmV-5n-l2d"/>
                         <segue destination="0iv-yE-W0L" kind="modal" identifier="ShowTemplates" id="69b-uW-fbO"/>
@@ -965,7 +961,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="barTintColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.0" green="0.50196081399917603" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -1075,8 +1071,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="bgw-92-VPn"/>
         <segue reference="huX-Fd-mtS"/>
+        <segue reference="bgw-92-VPn"/>
         <segue reference="peA-5B-ybY"/>
     </inferredMetricsTieBreakers>
 </document>

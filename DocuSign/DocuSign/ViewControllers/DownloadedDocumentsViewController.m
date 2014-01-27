@@ -11,24 +11,28 @@
 #import "DownloadedDocument.h"
 #import "WebViewController.h"
 
-@interface DownloadedDocumentsViewController ()
+@interface DownloadedDocumentsViewController ()<UIDocumentInteractionControllerDelegate>
 @property (nonatomic,strong) NSMutableArray * downloadedDocuments;
 @end
 
 @implementation DownloadedDocumentsViewController
+
+#pragma mark - UIViewController
 
 -(void)viewDidLoad {
     [super viewDidLoad];
     [self fetchDocuments];
 }
 
+
+#pragma mark - DownloadedDocumentsViewController
+
 -(void)fetchDocuments {
     //FetchDocuments from Local folder.
     [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
     self.downloadedDocuments = [NSMutableArray array];
     NSFileManager * fileManager = [NSFileManager defaultManager];
-    NSString * documentsDirectory = [(NSURL *)[[fileManager URLsForDirectory:NSDocumentDirectory
-                                                                   inDomains:NSUserDomainMask] lastObject] path];
+    NSString * documentsDirectory = [(NSURL *)[[fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject] path];
     NSArray * envelopsArray = [fileManager contentsOfDirectoryAtPath:documentsDirectory error:nil];
     [envelopsArray enumerateObjectsUsingBlock:^(NSString * directory, NSUInteger idx, BOOL *stop) {
         NSString * envelopeDirectory = [documentsDirectory stringByAppendingPathComponent:directory];
@@ -50,8 +54,16 @@
         }
     }];
     [MBProgressHUD hideAllHUDsForView:self.tableView animated:NO];
-    [self.tableView reloadData];
 }
+
+-(void)openDocument:(NSURL *)documentURL {
+    UIDocumentInteractionController * previewController = [UIDocumentInteractionController interactionControllerWithURL:documentURL];
+    previewController.delegate = self;
+    [previewController presentPreviewAnimated:YES];
+}
+
+
+#pragma mark - UITableViewDataSource
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return (self.downloadedDocuments.count == 0) ? 1 : self.downloadedDocuments.count;
@@ -65,31 +77,23 @@
         cell.accessoryType = UITableViewCellAccessoryNone;
     } else {
         cell.textLabel.text = ((DownloadedDocument *)self.downloadedDocuments[indexPath.row]).documentName;
-        cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton;
+        cell.accessoryType = UITableViewCellAccessoryDetailButton;
     }
     return cell;
 }
 
-#pragma mark Navigation
--(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([segue.identifier isEqualToString:@"ShowDownloadedDocument"]) {
-        if ([segue.destinationViewController isKindOfClass:[WebViewController class]]) {
-            WebViewController * destinationVC = (WebViewController *)segue.destinationViewController;
-            if ([sender isKindOfClass:[UITableViewCell class]]) {
-                NSInteger row = [self.tableView indexPathForCell:sender].row;
-                destinationVC.url = [NSURL fileURLWithPath:((DownloadedDocument *)self.downloadedDocuments[row]).documentPath];
-            }
-        }
-    }
-    else if ([segue.identifier isEqualToString:@"ShowDownloadedDocumentSummary"]) {
-        if ([segue.destinationViewController isKindOfClass:[WebViewController class]]) {
-            WebViewController * destinationVC = (WebViewController *)segue.destinationViewController;
-            if ([sender isKindOfClass:[UITableViewCell class]]) {
-                NSInteger row = [self.tableView indexPathForCell:sender].row;
-                destinationVC.url = [NSURL fileURLWithPath:((DownloadedDocument *)self.downloadedDocuments[row]).summaryPath];
-            }
-        }
-    }
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self openDocument:[NSURL fileURLWithPath:((DownloadedDocument *)self.downloadedDocuments[indexPath.row]).documentPath]];
+}
+
+-(void)tableView:(UITableView *)tableView accessoryButtonTappedForRowWithIndexPath:(NSIndexPath *)indexPath {
+    [self openDocument:[NSURL fileURLWithPath:((DownloadedDocument *)self.downloadedDocuments[indexPath.row]).summaryPath]];
+}
+
+
+#pragma mark - UIDocumentInteractionControllerDelegate
+-(UIViewController *)documentInteractionControllerViewControllerForPreview:(UIDocumentInteractionController *)controller {
+    return self;
 }
 
 @end

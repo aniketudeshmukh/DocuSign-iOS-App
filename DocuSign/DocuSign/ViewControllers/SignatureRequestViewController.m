@@ -18,19 +18,21 @@
 @interface SignatureRequestViewController ()<ABPeoplePickerNavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *fileNameTextField;
 @property (weak, nonatomic) IBOutlet UILabel *documentTypeLabel;
-@property (weak, nonatomic) IBOutlet UITextField *receipientTextField;
+@property (weak, nonatomic) IBOutlet UITextField *recipientTextField;
 @property (weak, nonatomic) IBOutlet UITextField *subjectTextField;
 @property (weak, nonatomic) IBOutlet UITextView *emailBodyTextView;
 @property (nonatomic, strong) EnvelopeTemplate * template;
 @property (nonatomic, strong) LocalDocument * document;
-@property (nonatomic, copy) NSString * receipientEmail;
+@property (nonatomic, copy) NSString * recipientEmail;
 - (IBAction)chooseFile:(id)sender;
-- (IBAction)chooseReceipient:(id)sender;
+- (IBAction)chooseRecipient:(id)sender;
 - (IBAction)cancel:(id)sender;
 - (IBAction)send:(id)sender;
 @end
 
 @implementation SignatureRequestViewController
+
+#pragma mark - UIViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -39,8 +41,11 @@
 
 -(void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self.receipientTextField becomeFirstResponder];
+    [self.recipientTextField becomeFirstResponder];
 }
+
+
+#pragma mark - SignatureRequestViewController
 
 -(void)configureView {
     if (self.signatureRequestType == UsingTemplate) {
@@ -55,7 +60,6 @@
     self.emailBodyTextView.text = [self defaultEmailBody];
 }
 
-
 -(NSString *)defaultEmailSubject {
     return [NSString stringWithFormat:@"Please DocuSign this document %@",self.fileNameTextField.text];
 }
@@ -64,8 +68,7 @@
     return [NSString stringWithFormat:@"Hello,\n\n%@ has sent you a new DocuSign document to view and sign.\n\n\nThanks,\n%@",[DocuSignClient sharedInstance].currentUser.userName,[DocuSignClient sharedInstance].currentUser.userName];
 }
 
-
-- (IBAction)chooseReceipient:(id)sender {
+- (IBAction)chooseRecipient:(id)sender {
     ABPeoplePickerNavigationController *peoplePicker = [[ABPeoplePickerNavigationController alloc] init];
     [peoplePicker setPeoplePickerDelegate:self];
     [peoplePicker setDisplayedProperties:[NSArray arrayWithObject:[NSNumber numberWithInt:kABPersonEmailProperty]]];
@@ -78,7 +81,7 @@
 
 - (IBAction)send:(id)sender {
     //Validation
-    if (self.receipientTextField.text == nil || [self.receipientTextField.text isEqualToString:@""] ||
+    if (self.recipientTextField.text == nil || [self.recipientTextField.text isEqualToString:@""] ||
         self.subjectTextField.text == nil || [self.subjectTextField.text isEqualToString:@""] ||
         self.emailBodyTextView.text == nil || [self.emailBodyTextView.text isEqualToString:@""] ||
         (self.template == nil && self.document == nil)) {
@@ -93,10 +96,10 @@
         if (self.signatureRequestType == UsingTemplate) {
             //Send Template For Signing
             NSString * templateId = self.template.templateId;
-            NSString * recipient = self.receipientTextField.text;
+            NSString * recipient = self.recipientTextField.text;
             NSString * subject = self.subjectTextField.text;
             NSString * body = self.emailBodyTextView.text;
-            [client sendRequestForSigningTemplateId:templateId receipient:recipient email:self.receipientEmail subject:subject emailBody:body onCompletion:^(NSError *error) {
+            [client sendRequestForSigningTemplateId:templateId recipient:recipient email:self.recipientEmail subject:subject emailBody:body onCompletion:^(NSError *error) {
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                 if (error) {
                     [[[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
@@ -110,10 +113,10 @@
         else {
             //Send Document For Signing
             NSString * documentName = self.fileNameTextField.text;
-            NSString * recipient = self.receipientTextField.text;
+            NSString * recipient = self.recipientTextField.text;
             NSString * subject = self.subjectTextField.text;
             NSString * body = self.emailBodyTextView.text;
-            [client sendRequestForSigningDocument:documentName documentPath:self.document.path receipient:recipient email:self.receipientEmail subject:subject emailBody:body onCompletion:^(NSError *error) {
+            [client sendRequestForSigningDocument:documentName documentPath:self.document.path recipient:recipient email:self.recipientEmail subject:subject emailBody:body onCompletion:^(NSError *error) {
                 [MBProgressHUD hideAllHUDsForView:self.view animated:YES];
                 if (error) {
                     [[[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
@@ -138,6 +141,7 @@
 
 
 #pragma mark - ABPeoplePickerNavigationControllerDelegate
+
 -(void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker {
     [peoplePicker dismissViewControllerAnimated:YES completion:nil];
 }
@@ -150,16 +154,17 @@
     NSString * firstName = (__bridge NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
     NSString * lastName = (__bridge NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);
     NSString * personName = [NSString stringWithFormat:@"%@ %@",firstName,lastName];
-    self.receipientTextField.text = personName;
+    self.recipientTextField.text = personName;
 
     ABMultiValueRef multiEmail = ABRecordCopyValue(person, property);
-    self.receipientEmail = (__bridge NSString *)ABMultiValueCopyValueAtIndex(multiEmail, identifier);
+    self.recipientEmail = (__bridge NSString *)ABMultiValueCopyValueAtIndex(multiEmail, identifier);
     [peoplePicker dismissViewControllerAnimated:YES completion:nil];
     return NO;
 }
 
 
 #pragma mark - Navigation
+
 -(IBAction)unwindToSignatureRequestViewController:(UIStoryboardSegue *)unwindSegue {
     NSLog(@"Sender: %@",unwindSegue);
     if ([unwindSegue.identifier isEqualToString:@"TemplateSelected"]) {
@@ -197,6 +202,5 @@
         }
     }
 }
-
 
 @end

@@ -7,8 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "FolderItem.h"
 @interface WebViewController : UIViewController
-@property (strong, nonatomic) FolderItem * item;
-@property (strong, nonatomic) NSURL * url;
+@property (nonatomic, copy) NSString * envelopeId;
 @end

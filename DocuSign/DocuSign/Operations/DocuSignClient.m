@@ -49,7 +49,10 @@ static NSString * const kEnvelopesOutForSignatureURL = @"/search_folders/out_for
 -(void)loginUser:(NSString *)user password:(NSString *) password onCompletion:(void(^)(NSError * error))completionHandler {
     //Create Authentication Request
     NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:kDocuSignURL]];
-    self.authenticationString = [NSString stringWithFormat:@"{\"Username\": \"%@\",\"Password\": \"%@\",\"IntegratorKey\": \"%@\"}",user,password,kIntegratorKey];
+//    self.authenticationString = [NSString stringWithFormat:@"{\"Username\": \"%@\",\"Password\": \"%@\",\"IntegratorKey\": \"%@\"}",user,password,kIntegratorKey];
+    NSDictionary * authenticationDictionary = @{@"Username" : user, @"Password" : password, @"IntegratorKey" : kIntegratorKey};
+    self.authenticationString = [self jsonStringFromObject:authenticationDictionary];
+
     [request setAllHTTPHeaderFields:@{@"X-DocuSign-Authentication" : self.authenticationString, @"Content-Type" : @"application/json", @"Accept" : @"application/json"}];
 
     NSURLSessionTask * task = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
@@ -166,7 +169,7 @@ static NSString * const kEnvelopesOutForSignatureURL = @"/search_folders/out_for
 }
 
 
--(void)getRecipientViewURLForEnvelopeId:(NSString *)envelopeId onCompletion:(void(^)(NSString * receipientViewURL, NSError * error))completionHandler {
+-(void)getRecipientViewURLForEnvelopeId:(NSString *)envelopeId onCompletion:(void(^)(NSString * recipientViewURL, NSError * error))completionHandler {
     NSString * embeddedURL = [NSString stringWithFormat:@"%@/envelopes/%@/views/recipient", self.currentUser.baseUrl, envelopeId];
     
     NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:embeddedURL]];
@@ -182,7 +185,7 @@ static NSString * const kEnvelopesOutForSignatureURL = @"/search_folders/out_for
     [request setHTTPBody:data];
     
     NSURLSessionDataTask * task = [self.session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        NSString * receipientViewURL = nil;
+        NSString * recipientViewURL = nil;
         if (!error) {
             NSHTTPURLResponse * urlResponse = (NSHTTPURLResponse *) response;
             if (urlResponse.statusCode == 200 || urlResponse.statusCode == 201) {
@@ -193,7 +196,7 @@ static NSString * const kEnvelopesOutForSignatureURL = @"/search_folders/out_for
                 NSString * errorCode = jsonResponse[@"errorCode"];
                 if (!errorCode) {
                     //Process Valid Response
-                    receipientViewURL = jsonResponse[@"url"];
+                    recipientViewURL = jsonResponse[@"url"];
                 }
                 else {
                     NSString * message = jsonResponse[@"message"];
@@ -205,12 +208,12 @@ static NSString * const kEnvelopesOutForSignatureURL = @"/search_folders/out_for
             }
         }
         
-        [[NSOperationQueue mainQueue] addOperationWithBlock:^{ completionHandler(receipientViewURL,error); }];
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{ completionHandler(recipientViewURL,error); }];
     }];
     [task resume];
 }
 
--(void)sendRequestForSigningDocument:(NSString *)documentName documentPath:(NSString *)documentPath receipient:(NSString *)name email:(NSString *)email subject:(NSString *)subject emailBody:(NSString *)emailbody onCompletion:(void(^)(NSError * error))completionHandler {
+-(void)sendRequestForSigningDocument:(NSString *)documentName documentPath:(NSString *)documentPath recipient:(NSString *)name email:(NSString *)email subject:(NSString *)subject emailBody:(NSString *)emailbody onCompletion:(void(^)(NSError * error))completionHandler {
     NSString *envelopesURL = [NSMutableString stringWithFormat:@"%@/envelopes",self.currentUser.baseUrl];
     NSMutableURLRequest *signatureRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:envelopesURL]];
     [signatureRequest setHTTPMethod:@"POST"];
@@ -225,21 +228,16 @@ static NSString * const kEnvelopesOutForSignatureURL = @"/search_folders/out_for
                                       @{@"email": email,
                                         @"name": name,
                                         @"recipientId": @"1",
-                                        
                                         @"tabs": @{ @"signHereTabs": [NSArray arrayWithObjects:
                                                                       @{@"xPosition": @"100",
                                                                         @"yPosition": @"100",
                                                                         @"documentId": @"1",
                                                                         @"pageNumber": @"1"}, nil ]}
-
                                         }, nil ] },
       @"status" : @"sent"
       };
     // convert dictionary object to JSON formatted string
     NSString *sigRequestDataString = [self jsonStringFromObject:signatureRequestData];
-    // read document bytes and place in the request
-//    NSString *appDirectory = [[[NSBundle mainBundle] bundlePath] stringByDeletingLastPathComponent];
-//    NSString *fullFilePath = [NSString stringWithFormat:@"%@/%@", appDirectory, documentName];
     // use an NSData object to store the document bytes
     NSData *filedata = [NSData dataWithContentsOfFile:documentPath];
     // create the boundary separated request body...
@@ -304,76 +302,164 @@ static NSString * const kEnvelopesOutForSignatureURL = @"/search_folders/out_for
 
     NSMutableArray * downloadedDocumentsArray = [NSMutableArray array];
 
-    [NSURLConnection sendAsynchronousRequest:documentsRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *documentsResponse, NSData *documentsData, NSError *documentsError) {
-        NSError *documentsJSONError = nil;
-        NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:documentsData options:kNilOptions error:&documentsJSONError];
-        if (documentsError){
-            NSLog(@"Error sending request: %@. Got response: %@", documentsRequest, documentsResponse);
-            NSLog( @"Response = %@", documentsResponse );
-            return;
+//    [NSURLConnection sendAsynchronousRequest:documentsRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *documentsResponse, NSData *documentsData, NSError *documentsError) {
+
+    NSURLSessionDataTask * task = [self.session dataTaskWithRequest:documentsRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (!error) {
+            NSError *documentsJSONError = nil;
+            NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&documentsJSONError];
+            NSLog( @"Documents info for envelope is:\n%@", jsonResponse);
+            NSError *jsonError = nil;
+            NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
+            // grab documents info for the next step...
+            NSArray *documentsArray = responseDictionary[@"envelopeDocuments"];
+
+            ///////////////////////////////////////////////////////////////////////////////////////
+            // Download each envelope document
+            ///////////////////////////////////////////////////////////////////////////////////////
+
+            NSMutableString *docUri;
+            NSMutableString *docName;
+            NSMutableString *docURL;
+
+            // loop through each document uri and download each doc (including the envelope's certificate)
+            for (int i = 0; i < [documentsArray count]; i++) {
+                docUri = [documentsArray[i] objectForKey:@"uri"];
+                docName = [documentsArray[i] objectForKey:@"name"];
+                docURL = [NSMutableString stringWithFormat: @"%@/%@", self.currentUser.baseUrl, docUri];
+
+                [documentsRequest setHTTPMethod:@"GET"];
+                [documentsRequest setURL:[NSURL URLWithString:docURL]];
+                [documentsRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+                [documentsRequest setValue:self.authenticationString forHTTPHeaderField:@"X-DocuSign-Authentication"];
+
+                NSError *error = [[NSError alloc] init];
+                NSHTTPURLResponse *responseCode = nil;
+                NSData *oResponseData = [NSURLConnection sendSynchronousRequest:documentsRequest returningResponse:&responseCode error:&error];
+                NSMutableString *jsonResponse = [[NSMutableString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding];
+                if([responseCode statusCode] != 200){
+                    NSLog(@"Error sending %@ request to %@\nHTTP status code = %i", [documentsRequest HTTPMethod], docURL, [responseCode statusCode]);
+                    NSLog( @"Response = %@", jsonResponse );
+                    return;
+                }
+
+                // download the document to the documents directory of this app
+                NSFileManager * fileManager = [NSFileManager defaultManager];
+                NSString * documentsDirectory = [(NSURL *)[[fileManager URLsForDirectory:NSDocumentDirectory
+                                                                               inDomains:NSUserDomainMask] lastObject] path];
+                NSString * envelopeDirectory = [documentsDirectory stringByAppendingPathComponent:envelopeId];
+                if (![fileManager fileExistsAtPath:envelopeDirectory]) {
+                    [fileManager createDirectoryAtPath:envelopeDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+                }
+                if ([docName isEqualToString:@"Summary"]) {
+                    docName = [@"Summary.pdf" mutableCopy];
+                }
+                NSString *filePath = [envelopeDirectory stringByAppendingPathComponent:docName];
+                [oResponseData writeToFile:filePath atomically:YES];
+                [downloadedDocumentsArray addObject:filePath];
+                NSLog(@"Envelope document - %@ - has been downloaded to %@\n", docName, filePath);
+            } // end for
         }
-        NSLog( @"Documents info for envelope is:\n%@", jsonResponse);
-        NSError *jsonError = nil;
-        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:documentsData options:kNilOptions error:&jsonError];
-        // grab documents info for the next step...
-        NSArray *documentsArray = responseDictionary[@"envelopeDocuments"];
-
-        ///////////////////////////////////////////////////////////////////////////////////////
-        // STEP 3 - Download each envelope document
-        ///////////////////////////////////////////////////////////////////////////////////////
-
-        NSMutableString *docUri;
-        NSMutableString *docName;
-        NSMutableString *docURL;
-
-        // loop through each document uri and download each doc (including the envelope's certificate)
-        for (int i = 0; i < [documentsArray count]; i++)
-        {
-            docUri = [documentsArray[i] objectForKey:@"uri"];
-            docName = [documentsArray[i] objectForKey:@"name"];
-            docURL = [NSMutableString stringWithFormat: @"%@/%@", self.currentUser.baseUrl, docUri];
-
-            [documentsRequest setHTTPMethod:@"GET"];
-            [documentsRequest setURL:[NSURL URLWithString:docURL]];
-            [documentsRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-            [documentsRequest setValue:self.authenticationString forHTTPHeaderField:@"X-DocuSign-Authentication"];
-
-            NSError *error = [[NSError alloc] init];
-            NSHTTPURLResponse *responseCode = nil;
-            NSData *oResponseData = [NSURLConnection sendSynchronousRequest:documentsRequest returningResponse:&responseCode error:&error];
-            NSMutableString *jsonResponse = [[NSMutableString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding];
-            if([responseCode statusCode] != 200){
-                NSLog(@"Error sending %@ request to %@\nHTTP status code = %i", [documentsRequest HTTPMethod], docURL, [responseCode statusCode]);
-                NSLog( @"Response = %@", jsonResponse );
-                return;
-            }
-
-            // download the document to the documents directory of this app
-            NSFileManager * fileManager = [NSFileManager defaultManager];
-            NSString * documentsDirectory = [(NSURL *)[[fileManager URLsForDirectory:NSDocumentDirectory
-                                                    inDomains:NSUserDomainMask] lastObject] path];
-            NSString * envelopeDirectory = [documentsDirectory stringByAppendingPathComponent:envelopeId];
-            if (![fileManager fileExistsAtPath:envelopeDirectory]) {
-                [fileManager createDirectoryAtPath:envelopeDirectory withIntermediateDirectories:YES attributes:nil error:nil];
-            }
-            if ([docName isEqualToString:@"Summary"]) {
-                docName = [@"Summary.pdf" mutableCopy];
-            }
-            NSString *filePath = [envelopeDirectory stringByAppendingPathComponent:docName];
-            [oResponseData writeToFile:filePath atomically:YES];
-            [downloadedDocumentsArray addObject:filePath];
-            NSLog(@"Envelope document - %@ - has been downloaded to %@\n", docName, filePath);
-        } // end for
+        else {
+            NSLog(@"Error sending request: %@. Got response: %@", documentsRequest, response);
+            NSLog( @"Response = %@", response );
+        }
+        
+        //Call Completion Handler
+        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+            completionHandler(downloadedDocumentsArray,error);
+        }];
     }];
-
-    //Post Errors
-    NSError * error = nil;
-    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
-        completionHandler(downloadedDocumentsArray,error);
-    }];
+    
+    [task resume];
 }
 
--(void)sendRequestForSigningTemplateId:(NSString *)templateId receipient:(NSString *)name email:(NSString *)email subject:(NSString *)subject emailBody:(NSString *)emailbody onCompletion:(void(^)(NSError * error))completionHandler {
+//-(void)downloadAllDocumentsForEnvelopeId:(NSString *)envelopeId onCompletion:(void(^)(NSArray * downloadedDocuments, NSError * error))completionHandler {
+//    ///////////////////////////////////////////////////////////////////////////////////////
+//    // Get Document Info for specified envelope
+//    ///////////////////////////////////////////////////////////////////////////////////////
+//
+//    // append /envelopes/{envelopeId}/documents URI to baseUrl and use as endpoint for next request
+//    NSString *documentsURL = [NSMutableString stringWithFormat:@"%@/envelopes/%@/documents", self.currentUser.baseUrl, envelopeId];
+//
+//    NSMutableURLRequest *documentsRequest = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:documentsURL]];
+//    [documentsRequest setHTTPMethod:@"GET"];
+//
+//    [documentsRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+//    [documentsRequest setValue:self.authenticationString forHTTPHeaderField:@"X-DocuSign-Authentication"];
+//
+//    NSMutableArray * downloadedDocumentsArray = [NSMutableArray array];
+//
+//    [NSURLConnection sendAsynchronousRequest:documentsRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *documentsResponse, NSData *documentsData, NSError *documentsError) {
+//        NSError *documentsJSONError = nil;
+//        NSDictionary *jsonResponse = [NSJSONSerialization JSONObjectWithData:documentsData options:kNilOptions error:&documentsJSONError];
+//        if (documentsError){
+//            NSLog(@"Error sending request: %@. Got response: %@", documentsRequest, documentsResponse);
+//            NSLog( @"Response = %@", documentsResponse );
+//            return;
+//        }
+//        NSLog( @"Documents info for envelope is:\n%@", jsonResponse);
+//        NSError *jsonError = nil;
+//        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:documentsData options:kNilOptions error:&jsonError];
+//        // grab documents info for the next step...
+//        NSArray *documentsArray = responseDictionary[@"envelopeDocuments"];
+//
+//        ///////////////////////////////////////////////////////////////////////////////////////
+//        // STEP 3 - Download each envelope document
+//        ///////////////////////////////////////////////////////////////////////////////////////
+//
+//        NSMutableString *docUri;
+//        NSMutableString *docName;
+//        NSMutableString *docURL;
+//
+//        // loop through each document uri and download each doc (including the envelope's certificate)
+//        for (int i = 0; i < [documentsArray count]; i++)
+//        {
+//            docUri = [documentsArray[i] objectForKey:@"uri"];
+//            docName = [documentsArray[i] objectForKey:@"name"];
+//            docURL = [NSMutableString stringWithFormat: @"%@/%@", self.currentUser.baseUrl, docUri];
+//
+//            [documentsRequest setHTTPMethod:@"GET"];
+//            [documentsRequest setURL:[NSURL URLWithString:docURL]];
+//            [documentsRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+//            [documentsRequest setValue:self.authenticationString forHTTPHeaderField:@"X-DocuSign-Authentication"];
+//
+//            NSError *error = [[NSError alloc] init];
+//            NSHTTPURLResponse *responseCode = nil;
+//            NSData *oResponseData = [NSURLConnection sendSynchronousRequest:documentsRequest returningResponse:&responseCode error:&error];
+//            NSMutableString *jsonResponse = [[NSMutableString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding];
+//            if([responseCode statusCode] != 200){
+//                NSLog(@"Error sending %@ request to %@\nHTTP status code = %i", [documentsRequest HTTPMethod], docURL, [responseCode statusCode]);
+//                NSLog( @"Response = %@", jsonResponse );
+//                return;
+//            }
+//
+//            // download the document to the documents directory of this app
+//            NSFileManager * fileManager = [NSFileManager defaultManager];
+//            NSString * documentsDirectory = [(NSURL *)[[fileManager URLsForDirectory:NSDocumentDirectory
+//                                                                           inDomains:NSUserDomainMask] lastObject] path];
+//            NSString * envelopeDirectory = [documentsDirectory stringByAppendingPathComponent:envelopeId];
+//            if (![fileManager fileExistsAtPath:envelopeDirectory]) {
+//                [fileManager createDirectoryAtPath:envelopeDirectory withIntermediateDirectories:YES attributes:nil error:nil];
+//            }
+//            if ([docName isEqualToString:@"Summary"]) {
+//                docName = [@"Summary.pdf" mutableCopy];
+//            }
+//            NSString *filePath = [envelopeDirectory stringByAppendingPathComponent:docName];
+//            [oResponseData writeToFile:filePath atomically:YES];
+//            [downloadedDocumentsArray addObject:filePath];
+//            NSLog(@"Envelope document - %@ - has been downloaded to %@\n", docName, filePath);
+//        } // end for
+//    }];
+//
+//    //Post Errors
+//    NSError * error = nil;
+//    [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+//        completionHandler(downloadedDocumentsArray,error);
+//    }];
+//}
+
+-(void)sendRequestForSigningTemplateId:(NSString *)templateId recipient:(NSString *)name email:(NSString *)email subject:(NSString *)subject emailBody:(NSString *)emailbody onCompletion:(void(^)(NSError * error))completionHandler {
 
     ///////////////////////////////////////////////////////////////////////////////////////
     // Request Signature via Template
@@ -392,7 +478,7 @@ static NSString * const kEnvelopesOutForSignatureURL = @"/search_folders/out_for
                                            @"emailSubject" : subject,
                                            @"emailBlurb" : emailbody,
                                            @"templateId" : templateId,
-                                           @"templateRoles" : [NSArray arrayWithObjects: @{@"email":email, @"name": name, @"roleName" : @"receipients"}, nil ],
+                                           @"templateRoles" : @[ @{@"email":email, @"name": name, @"roleName" : @"recipient"} ],
                                            @"status" : @"sent"
                                            };
 
@@ -407,16 +493,35 @@ static NSString * const kEnvelopesOutForSignatureURL = @"/search_folders/out_for
     [signatureRequest setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
 
     //*** make the signature request!
-    [NSURLConnection sendAsynchronousRequest:signatureRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *envelopeResponse, NSData *envelopeData, NSError *envelopeError) {
+    NSURLSessionDataTask * task = [self.session dataTaskWithRequest:signatureRequest completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+        if (!error) {
 #warning Todo Error Handler
-        NSError * error;
-        NSError * jsonError = nil;
-        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:envelopeData options:kNilOptions error:&jsonError];
-        NSLog(@"Envelope Sent!  Response is: %@\n", responseDictionary);
+            NSError * jsonError = nil;
+            NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&jsonError];
+
+            NSLog(@"Envelope Sent!  Response is: %@\n", responseDictionary);
+        }
+
+        //Call Completion Handler
         [[NSOperationQueue mainQueue] addOperationWithBlock:^{
             completionHandler(error);
         }];
     }];
+
+    [task resume];
+
+
+
+//    [NSURLConnection sendAsynchronousRequest:signatureRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *envelopeResponse, NSData *envelopeData, NSError *envelopeError) {
+//#warning Todo Error Handler
+//        NSError * error;
+//        NSError * jsonError = nil;
+//        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:envelopeData options:kNilOptions error:&jsonError];
+//        NSLog(@"Envelope Sent!  Response is: %@\n", responseDictionary);
+//        [[NSOperationQueue mainQueue] addOperationWithBlock:^{
+//            completionHandler(error);
+//        }];
+//    }];
 }
 
 

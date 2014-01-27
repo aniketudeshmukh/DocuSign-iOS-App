@@ -12,8 +12,10 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
     [self addLocalDocuments];
+    [[UINavigationBar appearance] setBarTintColor:[UIColor colorWithRed:0 green:128.0/255 blue:1 alpha:1]];
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+
     return YES;
 }
 							
@@ -48,8 +50,7 @@
     //Copy Some Dummy Documents to Local directory
     if (![[[NSUserDefaults standardUserDefaults] valueForKey:@"DocumentsCopied"] boolValue]) {
         NSFileManager * fileManager = [NSFileManager defaultManager];
-        NSString * documentsDirectory = [(NSURL *)[[fileManager URLsForDirectory:NSDocumentDirectory
-                                                                       inDomains:NSUserDomainMask] lastObject] path];
+        NSString * documentsDirectory = [(NSURL *)[[fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject] path];
 
         NSArray * tempFiles = @[@"Dummy Document.docx",@"Another Dummy Document.docx"];
         [tempFiles enumerateObjectsUsingBlock:^(NSString * fileName, NSUInteger idx, BOOL *stop) {
@@ -61,7 +62,6 @@
     }
     [[NSUserDefaults standardUserDefaults] setValue:@YES forKey:@"DocumentsCopied"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-
 }
 
 @end

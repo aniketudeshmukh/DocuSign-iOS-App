@@ -17,6 +17,17 @@
 
 @implementation MenuViewController
 
+#pragma mark - UITableViewControllerDelegate
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (indexPath.section == 0 && indexPath.row != [tableView numberOfRowsInSection:indexPath.section] - 1) {
+            [self performSegueWithIdentifier:@"ShowDocumentsList" sender:indexPath];
+    }
+}
+
+
+#pragma mark - Navigation
+
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([segue.identifier isEqualToString:@"ShowDocumentsList"]) {
         NSIndexPath * indexPath = (NSIndexPath *)sender;
@@ -38,7 +49,7 @@
         }
         if ([segue.destinationViewController isKindOfClass:[DocumentsListViewController class]]) {
             DocumentsListViewController * destinationVC = (DocumentsListViewController *)segue.destinationViewController;
-            
+
             destinationVC.title = [self.tableView cellForRowAtIndexPath:indexPath].textLabel.text;
             destinationVC.folderType = folderType;
         }
@@ -56,13 +67,5 @@
         }
     }
 }
-
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0 && indexPath.row != [tableView numberOfRowsInSection:indexPath.section] - 1) {
-            [self performSegueWithIdentifier:@"ShowDocumentsList" sender:indexPath];
-    }
-}
-
-#pragma mark Navigation
 
 @end

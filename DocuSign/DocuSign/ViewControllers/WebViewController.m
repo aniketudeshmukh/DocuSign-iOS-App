@@ -16,29 +16,26 @@
 
 @implementation WebViewController
 
+#pragma mark - UIViewController
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText = @"Loading...";
-    if (self.url) {
-        [self.webView loadRequest:[NSURLRequest requestWithURL:self.url]];
-//        self.webView.clipsToBounds = NO;
-    }
-    else {
-        DocuSignClient * client = [DocuSignClient sharedInstance];
-        [client getRecipientViewURLForEnvelopeId:self.item.envelopeId onCompletion:^(NSString *receipientViewURL, NSError *error) {
-            if (!error) {
-                NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:receipientViewURL]];
-                [request setAllHTTPHeaderFields:@{@"X-DocuSign-Authentication" : client.authenticationString, @"Content-Type" : @"application/json", @"Accept" : @"application/json"}];
-                [self.webView loadRequest:request];
-            }
-            else {
-                NSLog(@"Error : %@", error);
-                [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
-            }
-        }];
-    }
+    DocuSignClient * client = [DocuSignClient sharedInstance];
+    [client getRecipientViewURLForEnvelopeId:self.envelopeId onCompletion:^(NSString *recipientViewURL, NSError *error) {
+        if (!error) {
+            NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:recipientViewURL]];
+            [request setAllHTTPHeaderFields:@{@"X-DocuSign-Authentication" : client.authenticationString, @"Content-Type" : @"application/json", @"Accept" : @"application/json"}];
+            [self.webView loadRequest:request];
+        }
+        else {
+            NSLog(@"Error : %@", error);
+            [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+        }
+    }];
 }
+
 
 #pragma mark - UIWebViewDelegate
 

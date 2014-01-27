@@ -17,12 +17,16 @@
 
 @implementation TemplatesViewController
 
-- (void)viewDidLoad
-{
+#pragma mark - UIViewController
+
+- (void)viewDidLoad {
     [super viewDidLoad];
     [self configureView];
     [self fetchAllTemplates];
 }
+
+
+#pragma mark - TemplatesViewController
 
 -(void)configureView {
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -47,15 +51,14 @@
     }];
 }
 
+
 #pragma mark - UITableViewControllerDelegate
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return (self.templates.count == 0) ? (self.refreshControl.isRefreshing) ? 0 : 1 : self.templates.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"TemplateCustomCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
 
@@ -78,7 +81,6 @@
     UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
     cell.accessoryType = UITableViewCellAccessoryCheckmark;
 }
-
 
 -(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];

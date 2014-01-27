@@ -20,19 +20,28 @@ typedef NS_ENUM(NSInteger, DSFolderType) {
 @property (nonatomic, copy, readonly) NSString * authenticationString;
 @property (nonatomic, readonly) User * currentUser;
 
+/* Returns Singleton instance of this class */
 +(instancetype)sharedInstance;
 
+/* Call this method for logging in to DocuSign API */
 -(void)loginUser:(NSString *)user password:(NSString *) password onCompletion:(void(^)(NSError * error))completionHandler;
 
+/* Provides list of all envelopes from a given folder for the logged in User */
 -(void)getEnvelopesFromFolder:(DSFolderType)folderType onCompletion:(void(^)(NSArray * array, NSError * error))completionHandler;
 
+/* Provides list of all templates for the logged in User */
 -(void)getAllTemplatesOnCompletion:(void(^)(NSArray * array, NSError * error))completionHandler;
 
--(void)getRecipientViewURLForEnvelopeId:(NSString *)envelopeId onCompletion:(void(^)(NSString * receipientViewURL, NSError * error))completionHandler;
+/* Provides recipient view url for the supplied envelopeId for the logged in User */
+-(void)getRecipientViewURLForEnvelopeId:(NSString *)envelopeId onCompletion:(void(^)(NSString * recipientViewURL, NSError * error))completionHandler;
 
--(void)sendRequestForSigningDocument:(NSString *)documentName documentPath:(NSString *)documentPath receipient:(NSString *)name email:(NSString *)email subject:(NSString *)subject emailBody:(NSString *)emailbody onCompletion:(void(^)(NSError * error))completionHandler;
+/* Sends signing request to the recipient with supplied document and email subject & message  */
+-(void)sendRequestForSigningDocument:(NSString *)documentName documentPath:(NSString *)documentPath recipient:(NSString *)name email:(NSString *)email subject:(NSString *)subject emailBody:(NSString *)emailbody onCompletion:(void(^)(NSError * error))completionHandler;
 
--(void)sendRequestForSigningTemplateId:(NSString *)templateId receipient:(NSString *)name email:(NSString *)email subject:(NSString *)subject emailBody:(NSString *)emailbody onCompletion:(void(^)(NSError * error))completionHandler;
+/* Sends signing request to the recipient with supplied template and email subject & message  */
+-(void)sendRequestForSigningTemplateId:(NSString *)templateId recipient:(NSString *)name email:(NSString *)email subject:(NSString *)subject emailBody:(NSString *)emailbody onCompletion:(void(^)(NSError * error))completionHandler;
 
+/* Downloads all the documents from the supplied envelopeId */
 -(void)downloadAllDocumentsForEnvelopeId:(NSString *)envelopeId onCompletion:(void(^)(NSArray * downloadedDocuments, NSError * error))completionHandler;
+
 @end

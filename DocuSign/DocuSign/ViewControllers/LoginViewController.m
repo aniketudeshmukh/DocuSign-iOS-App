@@ -18,11 +18,15 @@
 
 @implementation LoginViewController
 
+#pragma mark - UIViewController
+
 -(void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.passwordTextField.text = @"";
 }
 
+
+#pragma mark - LoginViewController
 
 - (IBAction)login {
     MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
@@ -48,4 +52,5 @@
         }
     }];
 }
+
 @end

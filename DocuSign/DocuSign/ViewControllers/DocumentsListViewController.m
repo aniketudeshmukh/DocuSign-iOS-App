@@ -20,11 +20,16 @@
 
 @implementation DocumentsListViewController
 
+#pragma mark - UIViewController
+
 -(void)viewDidLoad {
     [super viewDidLoad];
     [self configureView];
     [self fetchDocuments];
 }
+
+
+#pragma mark - DocumentsListViewController
 
 -(void)configureView {
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -51,27 +56,27 @@
 -(void)downloadButtonTapped:(UIControl *)button withEvent:(UIEvent *)event {
     NSIndexPath * indexPath = [self.tableView indexPathForRowAtPoint: [[[event touchesForView: button] anyObject] locationInView: self.tableView]];
     if ( indexPath == nil ) return;
+
+    UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
     UIActivityIndicatorView * activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     activityIndicator.hidesWhenStopped = YES;
     [activityIndicator startAnimating];
-    [button addSubview:activityIndicator];
-    //    button.hidden = YES;
+    cell.accessoryView = activityIndicator;
+
     DocuSignClient * client = [DocuSignClient sharedInstance];
     FolderItem * item = (FolderItem *)self.folderItems[indexPath.row];
     [client downloadAllDocumentsForEnvelopeId:item.envelopeId onCompletion:^(NSArray *downloadedDocuments, NSError *error) {
         [activityIndicator stopAnimating];
-        if (!error) {
-
-        }
-        else {
-            //            button.hidden = NO;
+        if (error) {
+            cell.accessoryView = button;
             UIAlertView * alert = [[UIAlertView alloc] initWithTitle:@"Download Failed" message:error.localizedDescription delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
             [alert show];
         }
     }];
 }
 
-#pragma mark - Table view data source
+
+#pragma mark - UITableViewControllerDatasource
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return (self.folderItems.count == 0) ? (self.refreshControl.isRefreshing) ? 0 : 1 : self.folderItems.count;
@@ -165,7 +170,7 @@
             WebViewController * destinationVC = (WebViewController *)segue.destinationViewController;
             if ([sender isKindOfClass:[UITableViewCell class]]) {
                 NSInteger row = [self.tableView indexPathForCell:sender].row;
-                destinationVC.item = self.folderItems[row];
+                destinationVC.envelopeId = [(FolderItem *)self.folderItems[row] envelopeId];
             }
         }
     }
