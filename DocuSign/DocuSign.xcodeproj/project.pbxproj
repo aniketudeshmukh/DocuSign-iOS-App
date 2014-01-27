@@ -30,6 +30,8 @@
 		E2A8145918927230001B3845 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A8145818927230001B3845 /* MBProgressHUD.m */; };
 		E2A8145C18928162001B3845 /* SignatureRequestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2A8145B18928162001B3845 /* SignatureRequestViewController.m */; };
 		E2ABC6131894BC4700CD289C /* EnvelopeTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2ABC6121894BC4700CD289C /* EnvelopeTemplate.m */; };
+		E2D1E73A18965DAE002CD0B7 /* Envelope.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D1E73918965DAE002CD0B7 /* Envelope.m */; };
+		E2D1E740189665FD002CD0B7 /* EnvelopesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D1E73F189665FD002CD0B7 /* EnvelopesListViewController.m */; };
 		E2D4005D1894F8AA00A2F6D8 /* LocalDocumentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D4005C1894F8AA00A2F6D8 /* LocalDocumentsViewController.m */; };
 		E2D400601895051400A2F6D8 /* LocalDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D4005F1895051400A2F6D8 /* LocalDocument.m */; };
 		E2D4006418950B6E00A2F6D8 /* Another Dummy Document.docx in Resources */ = {isa = PBXBuildFile; fileRef = E2D400611895096500A2F6D8 /* Another Dummy Document.docx */; };
@@ -90,6 +92,10 @@
 		E2A8145B18928162001B3845 /* SignatureRequestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignatureRequestViewController.m; sourceTree = "<group>"; };
 		E2ABC6111894BC4700CD289C /* EnvelopeTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvelopeTemplate.h; sourceTree = "<group>"; };
 		E2ABC6121894BC4700CD289C /* EnvelopeTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnvelopeTemplate.m; sourceTree = "<group>"; };
+		E2D1E73818965DAE002CD0B7 /* Envelope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Envelope.h; sourceTree = "<group>"; };
+		E2D1E73918965DAE002CD0B7 /* Envelope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Envelope.m; sourceTree = "<group>"; };
+		E2D1E73E189665FD002CD0B7 /* EnvelopesListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvelopesListViewController.h; sourceTree = "<group>"; };
+		E2D1E73F189665FD002CD0B7 /* EnvelopesListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnvelopesListViewController.m; sourceTree = "<group>"; };
 		E2D4005B1894F8AA00A2F6D8 /* LocalDocumentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalDocumentsViewController.h; sourceTree = "<group>"; };
 		E2D4005C1894F8AA00A2F6D8 /* LocalDocumentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalDocumentsViewController.m; sourceTree = "<group>"; };
 		E2D4005E1895051400A2F6D8 /* LocalDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalDocument.h; sourceTree = "<group>"; };
@@ -147,6 +153,8 @@
 				E2ABC6121894BC4700CD289C /* EnvelopeTemplate.m */,
 				E2D4005E1895051400A2F6D8 /* LocalDocument.h */,
 				E2D4005F1895051400A2F6D8 /* LocalDocument.m */,
+				E2D1E73818965DAE002CD0B7 /* Envelope.h */,
+				E2D1E73918965DAE002CD0B7 /* Envelope.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -267,6 +275,8 @@
 				E2D998E11893C5AD004F3799 /* TemplatesViewController.m */,
 				E236C27F18912F92003E8F49 /* WebViewController.h */,
 				E236C28018912F92003E8F49 /* WebViewController.m */,
+				E2D1E73E189665FD002CD0B7 /* EnvelopesListViewController.h */,
+				E2D1E73F189665FD002CD0B7 /* EnvelopesListViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -400,8 +410,10 @@
 				E2A8145C18928162001B3845 /* SignatureRequestViewController.m in Sources */,
 				E252BD2A188F7FFE00532B90 /* AppDelegate.m in Sources */,
 				E2D4006818951A4800A2F6D8 /* DownloadedDocumentsViewController.m in Sources */,
+				E2D1E740189665FD002CD0B7 /* EnvelopesListViewController.m in Sources */,
 				E2D400601895051400A2F6D8 /* LocalDocument.m in Sources */,
 				E236C27B1891111E003E8F49 /* DocumentsListViewController.m in Sources */,
+				E2D1E73A18965DAE002CD0B7 /* Envelope.m in Sources */,
 				E236C28818914972003E8F49 /* DocumentDetailsViewController.m in Sources */,
 				E236C27E18912319003E8F49 /* FolderItem.m in Sources */,
 				E252BCFB188F7F2400532B90 /* main.m in Sources */,

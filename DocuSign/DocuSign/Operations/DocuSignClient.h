@@ -32,6 +32,9 @@ typedef NS_ENUM(NSInteger, DSFolderType) {
 /* Provides list of all templates for the logged in User */
 -(void)getAllTemplatesOnCompletion:(void(^)(NSArray * array, NSError * error))completionHandler;
 
+/* Provides list of all envelopes and their statuses for the logged in User */
+-(void)getAllEnvelopesOnCompletion:(void(^)(NSArray * envelopesArray, NSError * error))completionHandler;
+
 /* Provides recipient view url for the supplied envelopeId for the logged in User */
 -(void)getRecipientViewURLForEnvelopeId:(NSString *)envelopeId onCompletion:(void(^)(NSString * recipientViewURL, NSError * error))completionHandler;
 

@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DocuSign/Operations/DocuSignClient.m"
-            timestampString = "412498102.184174"
+            timestampString = "412512508.538245"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "185"
-            endingLineNumber = "185"
+            startingLineNumber = "186"
+            endingLineNumber = "186"
             landmarkName = "-getRecipientViewURLForEnvelopeId:onCompletion:"
             landmarkType = "5">
          </BreakpointContent>
@@ -42,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DocuSign/Operations/DocuSignClient.m"
-            timestampString = "412498102.184174"
+            timestampString = "412512508.538245"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "189"
-            endingLineNumber = "189"
+            startingLineNumber = "190"
+            endingLineNumber = "190"
             landmarkName = "-getRecipientViewURLForEnvelopeId:onCompletion:"
             landmarkType = "5">
          </BreakpointContent>
@@ -68,11 +68,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "DocuSign/Operations/DocuSignClient.m"
-            timestampString = "412498102.184174"
+            timestampString = "412512674.812747"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "295"
-            endingLineNumber = "295"
+            startingLineNumber = "362"
+            endingLineNumber = "362"
             landmarkName = "-downloadAllDocumentsForEnvelopeId:onCompletion:"
             landmarkType = "5">
          </BreakpointContent>
@@ -106,6 +106,22 @@
             startingLineNumber = "22"
             endingLineNumber = "22"
             landmarkName = "-viewDidLoad"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "DocuSign/Operations/DocuSignClient.m"
+            timestampString = "412513446.375679"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "254"
+            endingLineNumber = "254"
+            landmarkName = "-getAllEnvelopesOnCompletion:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

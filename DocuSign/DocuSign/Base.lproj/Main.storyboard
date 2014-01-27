@@ -23,11 +23,14 @@
                                 <color key="textColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="09d5bf63-cc1e-4d89-a31c-3193e2ab0f1b" borderStyle="roundedRect" placeholder="Please enter your DocuSign userid" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="fYM-qw-Du1">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Please enter your DocuSign userid" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="fYM-qw-Du1">
                                 <rect key="frame" x="20" y="119" width="280" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                <connections>
+                                    <action selector="moveToNextTextField:" destination="vXZ-lx-hvc" eventType="editingDidEndOnExit" id="PMT-bO-fLH"/>
+                                </connections>
                             </textField>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Password:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kDq-xv-i0a">
                                 <rect key="frame" x="20" y="169" width="76" height="21"/>
@@ -151,14 +154,14 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="uv2-GI-MJC" style="IBUITableViewCellStyleDefault" id="4Z2-7W-CiI">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="mNh-7V-Pf8" style="IBUITableViewCellStyleDefault" id="UoV-fV-BPB">
                                         <rect key="frame" x="0.0" y="295" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4Z2-7W-CiI" id="Iqq-yq-29a">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UoV-fV-BPB" id="xf2-Iv-SPV">
                                             <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Downloaded Documents" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="uv2-GI-MJC">
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Downloaded Documents" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mNh-7V-Pf8">
                                                     <rect key="frame" x="15" y="0.0" width="270" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -168,7 +171,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="Ugm-z8-SiI" kind="push" identifier="ShowDownloadedDocuments" id="v2e-hE-vpX"/>
+                                            <segue destination="Ugm-z8-SiI" kind="push" identifier="ShowDownloadedDocuments" id="KU1-HR-ZgB"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -217,6 +220,30 @@
                                     </tableViewCell>
                                 </cells>
                             </tableViewSection>
+                            <tableViewSection headerTitle="Status" id="H2p-uM-OBN">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" textLabel="bhw-vg-gig" style="IBUITableViewCellStyleDefault" id="QRE-KC-4YP">
+                                        <rect key="frame" x="0.0" y="523" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QRE-KC-4YP" id="9sI-IL-vOn">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="All Documents" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="bhw-vg-gig">
+                                                    <rect key="frame" x="15" y="0.0" width="270" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="Ojb-59-UPe" kind="push" id="jeK-kE-Zn6"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
                         </sections>
                         <connections>
                             <outlet property="dataSource" destination="Oog-Bx-2cf" id="yWp-jL-IV8"/>
@@ -231,6 +258,52 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7oH-LY-mUB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1015" y="21"/>
+        </scene>
+        <!--Envelopes List View Controller - All Documents-->
+        <scene sceneID="mdg-gC-Yrn">
+            <objects>
+                <tableViewController id="Ojb-59-UPe" customClass="EnvelopesListViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="80" sectionHeaderHeight="22" sectionFooterHeight="22" id="9nE-tC-siK">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" textLabel="wrg-4J-YNb" detailTextLabel="WEs-bY-67h" style="IBUITableViewCellStyleSubtitle" id="E4G-Rf-qwK">
+                                <rect key="frame" x="0.0" y="86" width="320" height="80"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="E4G-Rf-qwK" id="z6J-n9-qD1">
+                                    <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="34" id="wrg-4J-YNb">
+                                            <rect key="frame" x="15" y="21" width="34" height="22"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WEs-bY-67h">
+                                            <rect key="frame" x="15" y="43" width="43" height="15"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                            <color key="textColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="Ojb-59-UPe" id="weM-zt-G4O"/>
+                            <outlet property="delegate" destination="Ojb-59-UPe" id="4y3-LW-P95"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="All Documents" id="Tp3-f1-G4f"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uRL-Bv-lGr" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1555" y="1508"/>
         </scene>
         <!--Documents List View Controller - Documents-->
         <scene sceneID="Lp6-Fa-tjl">
@@ -461,7 +534,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VnL-OK-Ghu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1547" y="21"/>
+            <point key="canvasLocation" x="1555" y="-691"/>
         </scene>
         <!--Downloaded Documents View Controller - Downloaded Documents-->
         <scene sceneID="bWw-zv-udi">
@@ -500,7 +573,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="enJ-Yr-VId" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1547" y="-611"/>
+            <point key="canvasLocation" x="1555" y="21"/>
         </scene>
         <!--Signature Request View Controller - Request Signature-->
         <scene sceneID="GMN-d3-j3F">
@@ -658,7 +731,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mFG-P9-CG0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1547" y="1080"/>
+            <point key="canvasLocation" x="1555" y="756"/>
         </scene>
         <!--Templates View Controller - Choose Template-->
         <scene sceneID="Ojc-Qk-Yhq">
@@ -709,7 +782,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="o8O-Ij-kg7" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="iUQ-05-o2w" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2554" y="700"/>
+            <point key="canvasLocation" x="2566" y="412"/>
         </scene>
         <!--Document Details View Controller - Details-->
         <scene sceneID="EI8-V2-VZG">
@@ -912,7 +985,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Zc-Rv-who" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2086" y="-679"/>
+            <point key="canvasLocation" x="2086" y="-1384"/>
         </scene>
         <!--Web View Controller - DocuSign-->
         <scene sceneID="xRf-UB-FQY">
@@ -950,7 +1023,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7ns-uu-Vb3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2086" y="21"/>
+            <point key="canvasLocation" x="2086" y="-691"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="SP2-M6-ISK">
@@ -990,7 +1063,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pKI-XW-0eM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2086" y="700"/>
+            <point key="canvasLocation" x="2086" y="412"/>
         </scene>
         <!--Local Documents View Controller - Choose Local Document-->
         <scene sceneID="kVO-HE-SDL">
@@ -1041,7 +1114,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sVl-zT-oLJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="gH2-mz-IFg" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2554" y="1384"/>
+            <point key="canvasLocation" x="2566" y="1160"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="OYY-ei-sPs">
@@ -1062,7 +1135,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mNt-QG-Y9T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2086" y="1384"/>
+            <point key="canvasLocation" x="2086" y="1160"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -1071,8 +1144,8 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="huX-Fd-mtS"/>
-        <segue reference="bgw-92-VPn"/>
+        <segue reference="gzX-2E-Zen"/>
         <segue reference="peA-5B-ybY"/>
+        <segue reference="huX-Fd-mtS"/>
     </inferredMetricsTieBreakers>
 </document>

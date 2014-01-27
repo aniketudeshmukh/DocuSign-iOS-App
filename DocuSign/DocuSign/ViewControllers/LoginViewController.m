@@ -27,30 +27,41 @@
 
 
 #pragma mark - LoginViewController
+- (IBAction)moveToNextTextField:(UITextField *)sender {
+    [self.passwordTextField becomeFirstResponder];
+}
 
 - (IBAction)login {
-    MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    hud.labelText = @"Logging In...";
     [self.userTextField resignFirstResponder];
     [self.passwordTextField resignFirstResponder];
 
     NSString * user = self.userTextField.text;
     NSString * password = self.passwordTextField.text;
 
-    DocuSignClient * client = [DocuSignClient sharedInstance];
-    [client loginUser:user password:password onCompletion:^(NSError *error) {
-        [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
-        if (error) {
-            NSLog(@"Login Failed!");
-            NSLog(@"Error Code : %d",error.code);
-            NSLog(@"Reason : %@",error.localizedDescription);
-            [[[UIAlertView alloc] initWithTitle:@"Login Failed!" message:[NSString stringWithFormat:@"Error Code: %d\n Reason: %@", error.code,error.localizedDescription] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
-        }
-        else {
-            NSLog(@"Login Successful");
-            [self performSegueWithIdentifier:@"ShowMainViewController" sender:self];
-        }
-    }];
+    if (!user || [user isEqualToString:@""] || !password || [password isEqualToString:@""]) {
+        [[[UIAlertView alloc] initWithTitle:@"Invalid Credentials" message:@"User and/or password cannot be blank. Please enter valid user and password." delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+    }
+    else {
+        MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+        hud.labelText = @"Logging In...";
+
+        DocuSignClient * client = [DocuSignClient sharedInstance];
+        [client loginUser:user password:password onCompletion:^(NSError *error) {
+            [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
+            if (error) {
+                NSLog(@"Login Failed!");
+                NSLog(@"Error Code : %d",error.code);
+                NSLog(@"Reason : %@",error.localizedDescription);
+                [[[UIAlertView alloc] initWithTitle:@"Login Failed!" message:[NSString stringWithFormat:@"Error Code: %d\n Reason: %@", error.code,error.localizedDescription] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil] show];
+            }
+            else {
+                NSLog(@"Login Successful");
+                [self performSegueWithIdentifier:@"ShowMainViewController" sender:self];
+            }
+        }];
+    }
 }
+
+
 
 @end

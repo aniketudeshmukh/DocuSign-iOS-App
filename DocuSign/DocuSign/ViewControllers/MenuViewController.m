@@ -20,7 +20,7 @@
 #pragma mark - UITableViewControllerDelegate
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section == 0 && indexPath.row != [tableView numberOfRowsInSection:indexPath.section] - 1) {
+    if (indexPath.section == 0 && indexPath.row != 4) {
             [self performSegueWithIdentifier:@"ShowDocumentsList" sender:indexPath];
     }
 }
@@ -33,16 +33,16 @@
         NSIndexPath * indexPath = (NSIndexPath *)sender;
         DSFolderType folderType;
         switch (indexPath.row) {
-            case 0:
+            case 1:
                 folderType = AwaitingMySignature;
                 break;
-            case 1:
+            case 2:
                 folderType = Drafts;
                 break;
-            case 2:
+            case 3:
                 folderType = OutForSignature;
                 break;
-            case 3:
+            case 4:
             default:
                 folderType = Completed;
                 break;
