@@ -154,6 +154,8 @@
     // Set the selected recipient name and email address
     NSString * firstName = (__bridge NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
     NSString * lastName = (__bridge NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);
+    firstName = (firstName == nil) ? @"" : firstName;
+    lastName = (lastName == nil) ? @"" : lastName;
     NSString * personName = [NSString stringWithFormat:@"%@ %@",firstName,lastName];
     self.recipientTextField.text = personName;
 

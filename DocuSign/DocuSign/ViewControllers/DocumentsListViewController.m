@@ -48,7 +48,8 @@
     //Fetch documents from DocuSign client
     DocuSignClient * client = [DocuSignClient sharedInstance];
     [client getEnvelopesFromFolder:self.folderType onCompletion:^(NSArray *array, NSError *error) {
-        self.folderItems = array;
+        //Sort array by dates
+        self.folderItems = [array sortedArrayUsingDescriptors:@[[NSSortDescriptor sortDescriptorWithKey:@"sentDateTime" ascending:NO] ]];
         [MBProgressHUD hideAllHUDsForView:self.tableView animated:NO];
         if (self.refreshControl != nil && self.refreshControl.isRefreshing == YES) {
             [self.refreshControl endRefreshing];

@@ -24,7 +24,7 @@
         NSFileManager * fileManager = [NSFileManager defaultManager];
         NSString * documentsDirectory = [(NSURL *)[[fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject] path];
 
-        NSArray * tempFiles = @[@"Dummy Document.docx",@"Another Dummy Document.docx"];
+        NSArray * tempFiles = @[@"Dummy Document.doc",@"Another Dummy Document.doc"];
         [tempFiles enumerateObjectsUsingBlock:^(NSString * fileName, NSUInteger idx, BOOL *stop) {
             NSError * error = nil;
             NSString * path = [[NSBundle mainBundle] pathForResource:fileName ofType:nil];

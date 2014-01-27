@@ -32,10 +32,10 @@
 		E2ABC6131894BC4700CD289C /* EnvelopeTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = E2ABC6121894BC4700CD289C /* EnvelopeTemplate.m */; };
 		E2D1E73A18965DAE002CD0B7 /* Envelope.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D1E73918965DAE002CD0B7 /* Envelope.m */; };
 		E2D1E740189665FD002CD0B7 /* EnvelopesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D1E73F189665FD002CD0B7 /* EnvelopesListViewController.m */; };
+		E2D1E7431896CED8002CD0B7 /* Dummy Document.doc in Resources */ = {isa = PBXBuildFile; fileRef = E2D1E7411896CEBD002CD0B7 /* Dummy Document.doc */; };
+		E2D1E7441896CED8002CD0B7 /* Another Dummy Document.doc in Resources */ = {isa = PBXBuildFile; fileRef = E2D1E7421896CEBD002CD0B7 /* Another Dummy Document.doc */; };
 		E2D4005D1894F8AA00A2F6D8 /* LocalDocumentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D4005C1894F8AA00A2F6D8 /* LocalDocumentsViewController.m */; };
 		E2D400601895051400A2F6D8 /* LocalDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D4005F1895051400A2F6D8 /* LocalDocument.m */; };
-		E2D4006418950B6E00A2F6D8 /* Another Dummy Document.docx in Resources */ = {isa = PBXBuildFile; fileRef = E2D400611895096500A2F6D8 /* Another Dummy Document.docx */; };
-		E2D4006518950B6E00A2F6D8 /* Dummy Document.docx in Resources */ = {isa = PBXBuildFile; fileRef = E2D400621895096500A2F6D8 /* Dummy Document.docx */; };
 		E2D4006818951A4800A2F6D8 /* DownloadedDocumentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D4006718951A4800A2F6D8 /* DownloadedDocumentsViewController.m */; };
 		E2D998DF18938E23004F3799 /* DownloadedDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D998DE18938E23004F3799 /* DownloadedDocument.m */; };
 		E2D998E21893C5AD004F3799 /* TemplatesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D998E11893C5AD004F3799 /* TemplatesViewController.m */; };
@@ -96,12 +96,12 @@
 		E2D1E73918965DAE002CD0B7 /* Envelope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Envelope.m; sourceTree = "<group>"; };
 		E2D1E73E189665FD002CD0B7 /* EnvelopesListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvelopesListViewController.h; sourceTree = "<group>"; };
 		E2D1E73F189665FD002CD0B7 /* EnvelopesListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnvelopesListViewController.m; sourceTree = "<group>"; };
+		E2D1E7411896CEBD002CD0B7 /* Dummy Document.doc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dummy Document.doc"; sourceTree = "<group>"; };
+		E2D1E7421896CEBD002CD0B7 /* Another Dummy Document.doc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Another Dummy Document.doc"; sourceTree = "<group>"; };
 		E2D4005B1894F8AA00A2F6D8 /* LocalDocumentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalDocumentsViewController.h; sourceTree = "<group>"; };
 		E2D4005C1894F8AA00A2F6D8 /* LocalDocumentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalDocumentsViewController.m; sourceTree = "<group>"; };
 		E2D4005E1895051400A2F6D8 /* LocalDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalDocument.h; sourceTree = "<group>"; };
 		E2D4005F1895051400A2F6D8 /* LocalDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalDocument.m; sourceTree = "<group>"; };
-		E2D400611895096500A2F6D8 /* Another Dummy Document.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Another Dummy Document.docx"; sourceTree = "<group>"; };
-		E2D400621895096500A2F6D8 /* Dummy Document.docx */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dummy Document.docx"; sourceTree = "<group>"; };
 		E2D4006618951A4800A2F6D8 /* DownloadedDocumentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadedDocumentsViewController.h; sourceTree = "<group>"; };
 		E2D4006718951A4800A2F6D8 /* DownloadedDocumentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DownloadedDocumentsViewController.m; sourceTree = "<group>"; };
 		E2D998DD18938E23004F3799 /* DownloadedDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloadedDocument.h; sourceTree = "<group>"; };
@@ -293,8 +293,8 @@
 		E2D400631895096B00A2F6D8 /* Local Documents */ = {
 			isa = PBXGroup;
 			children = (
-				E2D400611895096500A2F6D8 /* Another Dummy Document.docx */,
-				E2D400621895096500A2F6D8 /* Dummy Document.docx */,
+				E2D1E7411896CEBD002CD0B7 /* Dummy Document.doc */,
+				E2D1E7421896CEBD002CD0B7 /* Another Dummy Document.doc */,
 			);
 			name = "Local Documents";
 			sourceTree = "<group>";
@@ -384,8 +384,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2D4006418950B6E00A2F6D8 /* Another Dummy Document.docx in Resources */,
-				E2D4006518950B6E00A2F6D8 /* Dummy Document.docx in Resources */,
+				E2D1E7431896CED8002CD0B7 /* Dummy Document.doc in Resources */,
+				E2D1E7441896CED8002CD0B7 /* Another Dummy Document.doc in Resources */,
 				E252BD07188F7F2400532B90 /* Images.xcassets in Resources */,
 				E252BCF9188F7F2400532B90 /* InfoPlist.strings in Resources */,
 				E252BD02188F7F2400532B90 /* Main.storyboard in Resources */,
