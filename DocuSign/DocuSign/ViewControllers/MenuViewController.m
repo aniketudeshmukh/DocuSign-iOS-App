@@ -33,16 +33,16 @@
         NSIndexPath * indexPath = (NSIndexPath *)sender;
         DSFolderType folderType;
         switch (indexPath.row) {
-            case 1:
+            case 0:
                 folderType = AwaitingMySignature;
                 break;
-            case 2:
+            case 1:
                 folderType = Drafts;
                 break;
-            case 3:
+            case 2:
                 folderType = OutForSignature;
                 break;
-            case 4:
+            case 3:
             default:
                 folderType = Completed;
                 break;
