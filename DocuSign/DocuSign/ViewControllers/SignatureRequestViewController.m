@@ -28,6 +28,9 @@
 - (IBAction)chooseRecipient:(id)sender;
 - (IBAction)cancel:(id)sender;
 - (IBAction)send:(id)sender;
+- (void)configureView;
+- (NSString *)defaultEmailSubject;
+- (NSString *)defaultEmailBody;
 @end
 
 @implementation SignatureRequestViewController
@@ -39,15 +42,10 @@
     [self configureView];
 }
 
--(void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [self.recipientTextField becomeFirstResponder];
-}
-
-
 #pragma mark - SignatureRequestViewController
 
--(void)configureView {
+- (void)configureView {
+    //Configure view for template or document
     if (self.signatureRequestType == UsingTemplate) {
         self.documentTypeLabel.text = @"Template:";
         self.fileNameTextField.placeholder = @"Choose your template";
@@ -60,11 +58,11 @@
     self.emailBodyTextView.text = [self defaultEmailBody];
 }
 
--(NSString *)defaultEmailSubject {
+- (NSString *)defaultEmailSubject {
     return [NSString stringWithFormat:@"Please DocuSign this document %@",self.fileNameTextField.text];
 }
 
--(NSString *)defaultEmailBody {
+- (NSString *)defaultEmailBody {
     return [NSString stringWithFormat:@"Hello,\n\n%@ has sent you a new DocuSign document to view and sign.\n\n\nThanks,\n%@",[DocuSignClient sharedInstance].currentUser.userName,[DocuSignClient sharedInstance].currentUser.userName];
 }
 
@@ -132,9 +130,11 @@
 
 - (IBAction)chooseFile:(id)sender {
     if (self.signatureRequestType == UsingTemplate) {
+        //Show templates picker
         [self performSegueWithIdentifier:@"ShowTemplates" sender:self];
     }
     else {
+        //Show local documents picker
         [self performSegueWithIdentifier:@"ShowLocalDcouments" sender:self];
     }
 }
@@ -151,6 +151,7 @@
 }
 
 -(BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier {
+    // Set the selected recipient name and email address
     NSString * firstName = (__bridge NSString *)ABRecordCopyValue(person, kABPersonFirstNameProperty);
     NSString * lastName = (__bridge NSString *)ABRecordCopyValue(person, kABPersonLastNameProperty);
     NSString * personName = [NSString stringWithFormat:@"%@ %@",firstName,lastName];
@@ -172,6 +173,7 @@
             TemplatesViewController * sourceVC = (TemplatesViewController *)unwindSegue.sourceViewController;
             NSIndexPath * selectedIndexPath = [sourceVC.tableView indexPathForSelectedRow];
             if (selectedIndexPath) {
+                //Set the template selected on the templates view controller
                 self.template = sourceVC.templates[selectedIndexPath.row];
                 self.fileNameTextField.text = self.template.name;
                 //Set email subject defined in template.
@@ -196,6 +198,7 @@
             LocalDocumentsViewController * sourceVC = (LocalDocumentsViewController *)unwindSegue.sourceViewController;
             NSIndexPath * selectedIndexPath = [sourceVC.tableView indexPathForSelectedRow];
             if (selectedIndexPath) {
+                //Set the document selected on the local documents view controller
                 self.document = sourceVC.documents[selectedIndexPath.row];
                 self.fileNameTextField.text = self.document.name;
             }

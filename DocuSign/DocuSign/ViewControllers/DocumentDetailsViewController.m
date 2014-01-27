@@ -21,10 +21,10 @@
 
 @implementation DocumentDetailsViewController
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
+#pragma mark - UIViewController
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
     self.nameLabel.text = self.item.subject;
     self.statusLabel.text = self.item.status;
     self.senderLabel.text = self.item.senderName;
@@ -32,8 +32,6 @@
     self.ownerLabel.text = self.item.ownerName;
     self.createdLabel.text = self.item.createdDateTime;
     self.expiresLabel.text = self.item.expireDateTime;
-    
 }
-
 
 @end

@@ -16,6 +16,9 @@
 
 @interface DocumentsListViewController ()
 @property (nonatomic,strong) NSArray * folderItems;
+-(void)configureView;
+-(void)fetchDocuments;
+-(void)downloadButtonTapped:(UIControl *)button withEvent:(UIEvent *)event;
 @end
 
 @implementation DocumentsListViewController
@@ -32,6 +35,7 @@
 #pragma mark - DocumentsListViewController
 
 -(void)configureView {
+    //Add Pull To Refresh Functionality
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull To Refresh"];
     [self.refreshControl addTarget:self action:@selector(fetchDocuments) forControlEvents:UIControlEventValueChanged];
@@ -41,6 +45,7 @@
 
 -(void)fetchDocuments {
     if (self.refreshControl) self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refreshing..."];
+    //Fetch documents from DocuSign client
     DocuSignClient * client = [DocuSignClient sharedInstance];
     [client getEnvelopesFromFolder:self.folderType onCompletion:^(NSArray *array, NSError *error) {
         self.folderItems = array;
@@ -54,15 +59,18 @@
 }
 
 -(void)downloadButtonTapped:(UIControl *)button withEvent:(UIEvent *)event {
+    //Find the cell that was tapped
     NSIndexPath * indexPath = [self.tableView indexPathForRowAtPoint: [[[event touchesForView: button] anyObject] locationInView: self.tableView]];
     if ( indexPath == nil ) return;
-
     UITableViewCell * cell = [self.tableView cellForRowAtIndexPath:indexPath];
+
+    //Add activity indicator to the tapped cell
     UIActivityIndicatorView * activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     activityIndicator.hidesWhenStopped = YES;
     [activityIndicator startAnimating];
     cell.accessoryView = activityIndicator;
 
+    //Download documents from DocuSign Server
     DocuSignClient * client = [DocuSignClient sharedInstance];
     FolderItem * item = (FolderItem *)self.folderItems[indexPath.row];
     [client downloadAllDocumentsForEnvelopeId:item.envelopeId onCompletion:^(NSArray *downloadedDocuments, NSError *error) {
@@ -86,6 +94,7 @@
     UITableViewCell * cell;
     NSString * cellIdentifier = @"Cell";
 
+    //Configure Cell
     if (self.folderItems.count == 0) {
         cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
         cell.textLabel.text = @"No Documents Available.";

@@ -14,6 +14,8 @@
 
 @interface EnvelopesListViewController ()
 @property (nonatomic, strong) NSArray * envelopes;
+-(void)configureView;
+-(void)fetchDocuments;
 @end
 
 @implementation EnvelopesListViewController
@@ -28,6 +30,7 @@
 #pragma mark - DocumentsListViewController
 
 -(void)configureView {
+    //Add Pull To Refresh Functionality
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull To Refresh"];
     [self.refreshControl addTarget:self action:@selector(fetchDocuments) forControlEvents:UIControlEventValueChanged];
@@ -38,6 +41,8 @@
 
 -(void)fetchDocuments {
     if (self.refreshControl) self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refreshing..."];
+
+    //Get All Envelopes & their statues from DocuSign server
     DocuSignClient * client = [DocuSignClient sharedInstance];
     [client getAllEnvelopesOnCompletion:^(NSArray *envelopesArray, NSError *error) {
 
@@ -52,6 +57,7 @@
 
         self.envelopes = sortedArray;
 
+        //Hide Activity Indicator
         [MBProgressHUD hideAllHUDsForView:self.tableView animated:NO];
         if (self.refreshControl != nil && self.refreshControl.isRefreshing == YES) {
             [self.refreshControl endRefreshing];
@@ -93,7 +99,5 @@
     
     return cell;
 }
-
-
 
 @end

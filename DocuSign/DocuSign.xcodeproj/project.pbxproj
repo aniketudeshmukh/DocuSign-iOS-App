@@ -143,18 +143,18 @@
 		E236C2721890EEA1003E8F49 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				E236C2731890EEAD003E8F49 /* User.h */,
-				E236C2741890EEAD003E8F49 /* User.m */,
-				E236C27C18912319003E8F49 /* FolderItem.h */,
-				E236C27D18912319003E8F49 /* FolderItem.m */,
 				E2D998DD18938E23004F3799 /* DownloadedDocument.h */,
 				E2D998DE18938E23004F3799 /* DownloadedDocument.m */,
-				E2ABC6111894BC4700CD289C /* EnvelopeTemplate.h */,
-				E2ABC6121894BC4700CD289C /* EnvelopeTemplate.m */,
-				E2D4005E1895051400A2F6D8 /* LocalDocument.h */,
-				E2D4005F1895051400A2F6D8 /* LocalDocument.m */,
 				E2D1E73818965DAE002CD0B7 /* Envelope.h */,
 				E2D1E73918965DAE002CD0B7 /* Envelope.m */,
+				E2ABC6111894BC4700CD289C /* EnvelopeTemplate.h */,
+				E2ABC6121894BC4700CD289C /* EnvelopeTemplate.m */,
+				E236C27C18912319003E8F49 /* FolderItem.h */,
+				E236C27D18912319003E8F49 /* FolderItem.m */,
+				E2D4005E1895051400A2F6D8 /* LocalDocument.h */,
+				E2D4005F1895051400A2F6D8 /* LocalDocument.m */,
+				E236C2731890EEAD003E8F49 /* User.h */,
+				E236C2741890EEAD003E8F49 /* User.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -263,6 +263,8 @@
 				E236C27A1891111E003E8F49 /* DocumentsListViewController.m */,
 				E2D4006618951A4800A2F6D8 /* DownloadedDocumentsViewController.h */,
 				E2D4006718951A4800A2F6D8 /* DownloadedDocumentsViewController.m */,
+				E2D1E73E189665FD002CD0B7 /* EnvelopesListViewController.h */,
+				E2D1E73F189665FD002CD0B7 /* EnvelopesListViewController.m */,
 				E2D4005B1894F8AA00A2F6D8 /* LocalDocumentsViewController.h */,
 				E2D4005C1894F8AA00A2F6D8 /* LocalDocumentsViewController.m */,
 				E2FC83EF1890C96D00EEE39E /* LoginViewController.h */,
@@ -275,8 +277,6 @@
 				E2D998E11893C5AD004F3799 /* TemplatesViewController.m */,
 				E236C27F18912F92003E8F49 /* WebViewController.h */,
 				E236C28018912F92003E8F49 /* WebViewController.m */,
-				E2D1E73E189665FD002CD0B7 /* EnvelopesListViewController.h */,
-				E2D1E73F189665FD002CD0B7 /* EnvelopesListViewController.m */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";

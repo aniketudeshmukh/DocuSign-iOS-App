@@ -10,5 +10,8 @@
 #import "DocuSignClient.h"
 
 @interface DocumentsListViewController : UITableViewController
+
+/* Documents from the speficied folder type will be displayed on the screen */
 @property (nonatomic,assign) DSFolderType folderType;
+
 @end

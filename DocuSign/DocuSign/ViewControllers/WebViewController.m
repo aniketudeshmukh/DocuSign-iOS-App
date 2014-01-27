@@ -22,15 +22,21 @@
     [super viewDidLoad];
     MBProgressHUD * hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
     hud.labelText = @"Loading...";
+
+    //Get the RevipientViewURL from the server
     DocuSignClient * client = [DocuSignClient sharedInstance];
     [client getRecipientViewURLForEnvelopeId:self.envelopeId onCompletion:^(NSString *recipientViewURL, NSError *error) {
         if (!error) {
             NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:recipientViewURL]];
             [request setAllHTTPHeaderFields:@{@"X-DocuSign-Authentication" : client.authenticationString, @"Content-Type" : @"application/json", @"Accept" : @"application/json"}];
+
+            //Load RecipientView on DocuSign Console using Webview
             [self.webView loadRequest:request];
         }
         else {
+            //Show Error
             NSLog(@"Error : %@", error);
+            [[[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
             [MBProgressHUD hideAllHUDsForView:self.view animated:NO];
         }
     }];
@@ -42,7 +48,8 @@
 -(BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
     NSLog(@"Request: %@", request);
     NSLog(@"Navigation Type: %d", navigationType);
-    
+
+    // Close WebViewController when action is complete on DocuSign Console
     if ([request.URL.host isEqualToString:@"done"]) {
         [self.navigationController popViewControllerAnimated:YES];
         return NO;

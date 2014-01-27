@@ -14,6 +14,10 @@ typedef NS_ENUM(NSInteger, SignatureRequestType) {
 };
 
 @interface SignatureRequestViewController : UITableViewController
+
+/* View will be configured as per the Signature Request Type supplied */
 @property (nonatomic, assign) SignatureRequestType signatureRequestType;
+
 -(IBAction)unwindToSignatureRequestViewController:(UIStoryboardSegue *)unwindSegue;
+
 @end

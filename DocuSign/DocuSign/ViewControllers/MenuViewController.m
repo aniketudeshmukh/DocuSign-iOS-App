@@ -49,7 +49,6 @@
         }
         if ([segue.destinationViewController isKindOfClass:[DocumentsListViewController class]]) {
             DocumentsListViewController * destinationVC = (DocumentsListViewController *)segue.destinationViewController;
-
             destinationVC.title = [self.tableView cellForRowAtIndexPath:indexPath].textLabel.text;
             destinationVC.folderType = folderType;
         }

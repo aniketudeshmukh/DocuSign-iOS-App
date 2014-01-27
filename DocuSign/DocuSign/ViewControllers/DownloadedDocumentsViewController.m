@@ -13,6 +13,8 @@
 
 @interface DownloadedDocumentsViewController ()<UIDocumentInteractionControllerDelegate>
 @property (nonatomic,strong) NSMutableArray * downloadedDocuments;
+-(void)fetchDocuments;
+-(void)openDocument:(NSURL *)documentURL;
 @end
 
 @implementation DownloadedDocumentsViewController
@@ -28,7 +30,7 @@
 #pragma mark - DownloadedDocumentsViewController
 
 -(void)fetchDocuments {
-    //FetchDocuments from Local folder.
+    //Fetch Documents from local folder.
     [MBProgressHUD showHUDAddedTo:self.tableView animated:YES];
     self.downloadedDocuments = [NSMutableArray array];
     NSFileManager * fileManager = [NSFileManager defaultManager];
@@ -57,6 +59,7 @@
 }
 
 -(void)openDocument:(NSURL *)documentURL {
+    //Open selected document using UIDocumentInteractionController
     UIDocumentInteractionController * previewController = [UIDocumentInteractionController interactionControllerWithURL:documentURL];
     previewController.delegate = self;
     [previewController presentPreviewAnimated:YES];
@@ -70,6 +73,7 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    //Configure Cell
     NSString * cellIdentifier = @"Cell";
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier forIndexPath:indexPath];
     if (self.downloadedDocuments.count == 0) {

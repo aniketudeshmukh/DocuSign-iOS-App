@@ -13,6 +13,8 @@
 
 @interface TemplatesViewController ()
 @property (nonatomic,strong) NSArray * templates;
+- (void)configureView;
+- (void)fetchAllTemplates;
 @end
 
 @implementation TemplatesViewController
@@ -28,7 +30,8 @@
 
 #pragma mark - TemplatesViewController
 
--(void)configureView {
+- (void)configureView {
+    //Add Pull To Refresh Functionality
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Pull To Refresh"];
     [self.refreshControl addTarget:self action:@selector(fetchAllTemplates) forControlEvents:UIControlEventValueChanged];
@@ -37,11 +40,18 @@
 }
 
 - (void)fetchAllTemplates {
+    //Fetch all templates from the server
     if (self.refreshControl) self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"Refreshing..."];
     DocuSignClient * client = [DocuSignClient sharedInstance];
     [client getAllTemplatesOnCompletion:^(NSArray *array, NSError *error) {
-#warning TODO Add Error Handler
-        self.templates = array;
+        if (!error) {
+            self.templates = array;
+        }
+        else {
+            //Show Error
+            [[[UIAlertView alloc] initWithTitle:@"Error" message:error.localizedDescription delegate:nil cancelButtonTitle:@"Dismiss" otherButtonTitles:nil] show];
+        }
+        //Hide Activity Indicator
         [MBProgressHUD hideAllHUDsForView:self.tableView animated:NO];
         if (self.refreshControl != nil && self.refreshControl.isRefreshing == YES) {
             [self.refreshControl endRefreshing];

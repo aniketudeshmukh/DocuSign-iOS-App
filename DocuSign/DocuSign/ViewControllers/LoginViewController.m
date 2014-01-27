@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *userTextField;
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 - (IBAction)login;
+- (IBAction)moveToNextTextField:(UITextField *)sender;
 @end
 
 @implementation LoginViewController

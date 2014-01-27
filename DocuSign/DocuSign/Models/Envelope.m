@@ -23,13 +23,9 @@
     self.status = attributes[@"status"];
     self.statusChangedDateTime = attributes[@"statusChangedDateTime"];
     self.createdDateTime = attributes[@"createdDateTime"];
-        self.deliveredDateTime = attributes[@"deliveredDateTime"];
-        self.sentDateTime = attributes[@"sentDateTime"];
-        self.completedDateTime = attributes[@"completedDateTime"];
-    
+    self.deliveredDateTime = attributes[@"deliveredDateTime"];
+    self.sentDateTime = attributes[@"sentDateTime"];
+    self.completedDateTime = attributes[@"completedDateTime"];
 }
 
-//-(NSString *)description {
-//    return [NSString stringWithFormat:@""]
-//}
 @end

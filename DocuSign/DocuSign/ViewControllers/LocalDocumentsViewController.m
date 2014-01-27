@@ -11,6 +11,7 @@
 
 @interface LocalDocumentsViewController ()
 @property (nonatomic,strong) NSArray * documents;
+- (void)fetchLocalDocuments;
 @end
 
 @implementation LocalDocumentsViewController
@@ -24,10 +25,10 @@
 #pragma mark - LocalDocumentsViewController
 
 - (void)fetchLocalDocuments {
+    //Find documents present in the documents directory of the app
     NSMutableArray * documents = [NSMutableArray array];
     NSFileManager * fileManager = [NSFileManager defaultManager];
-    NSString * documentsDirectory = [(NSURL *)[[fileManager URLsForDirectory:NSDocumentDirectory
-                                                                   inDomains:NSUserDomainMask] lastObject] path];
+    NSString * documentsDirectory = [(NSURL *)[[fileManager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject] path];
     NSArray * directoryContents = [fileManager contentsOfDirectoryAtPath:documentsDirectory error:nil];
     [directoryContents enumerateObjectsUsingBlock:^(NSString * fileName, NSUInteger idx, BOOL *stop) {
         NSString * filePath = [documentsDirectory stringByAppendingPathComponent:fileName];
@@ -35,8 +36,8 @@
         [fileManager fileExistsAtPath:filePath isDirectory:&isDirectory];
         if (!isDirectory) {
             LocalDocument * document = [[LocalDocument alloc] init];
-                    document.name = fileName;
-                    document.path = filePath;
+            document.name = fileName;
+            document.path = filePath;
             [documents addObject:document];
         }
     }];
@@ -46,13 +47,11 @@
 
 #pragma mark - UITableViewControllerDatasource
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return (self.documents.count == 0) ? 1 : self.documents.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
-{
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString *CellIdentifier = @"DocumentsCustomCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
 

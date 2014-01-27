@@ -8,5 +8,8 @@
 
 #import <UIKit/UIKit.h>
 @interface WebViewController : UIViewController
+
+//Specify the envelope id which should be displayed on DocuSign Console */
 @property (nonatomic, copy) NSString * envelopeId;
+
 @end

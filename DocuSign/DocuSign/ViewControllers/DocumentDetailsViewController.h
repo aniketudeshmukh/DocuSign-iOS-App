@@ -10,5 +10,8 @@
 #import "FolderItem.h"
 
 @interface DocumentDetailsViewController : UITableViewController
+
+/* Details of the speficied folder item will be displayed on the screen */
 @property (strong, nonatomic) FolderItem * item;
+
 @end
